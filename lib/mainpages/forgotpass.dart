@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:medicare/commanpages/configue.dart';
 
              //mainpages
-import 'package:medicare/mainpages/signin.dart';
+import 'package:medicare/loginSignup/signin.dart';
 class Forgotpass extends StatefulWidget {
   @override
   _ForgotpassState createState() => _ForgotpassState();

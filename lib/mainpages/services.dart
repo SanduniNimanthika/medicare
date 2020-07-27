@@ -6,7 +6,7 @@ import 'package:medicare/commanpages/footer.dart';
 
               //main pages
 import 'package:medicare/mainpages/homepage.dart';
-import 'package:medicare/mainpages/welcome.dart';
+import 'package:medicare/loginSignup/welcome.dart';
 
 class Services extends StatefulWidget {
   @override
@@ -73,7 +73,7 @@ class _ServicesState extends State<Services> {
                               " upload photo of your prescription  issued "
                               "by a SLMC registered doctor. We deliver medicine to your doorstep. "),
                           Padding(
-                            padding: EdgeInsets.only(top: 6*SizeConfig.heightMultiplier),
+                            padding: EdgeInsets.only(top: 2*SizeConfig.heightMultiplier),
                             child: Center(
                               child:Material(
                                 borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
@@ -117,7 +117,7 @@ class _ServicesState extends State<Services> {
                                   " order as you wish. We deliver products to your"
                                   "doorstep",),
                           Padding(
-                            padding: EdgeInsets.only(top: 6*SizeConfig.heightMultiplier),
+                            padding: EdgeInsets.only(top: 2*SizeConfig.heightMultiplier),
                             child: Center(
                               child:Material(
                                 borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
@@ -231,7 +231,7 @@ Widget _bodyPage(BuildContext context,String img,String name,String des){
           ),
         ),
         Padding(
-          padding:  EdgeInsets.only(top: 3*SizeConfig.heightMultiplier),
+          padding:  EdgeInsets.only(top: 1*SizeConfig.heightMultiplier),
           child: Text(
               name, style:Theme.of(context).textTheme.subtitle
           ),

@@ -1,21 +1,11 @@
 
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
-
-
-
-         //comman pages
 import 'package:medicare/commanpages/configue.dart';
-import 'package:medicare/mainpages/Signup.dart';
-import 'package:medicare/mainpages/authentication.dart';
-
-
-
-        //mainpages
+import 'package:medicare/loginSignup/Signup.dart';
+import 'package:medicare/services/authentication.dart';
 import 'package:medicare/mainpages/services.dart';
-import 'package:medicare/mainpages/signin.dart';
+import 'package:medicare/loginSignup/signin.dart';
 
 
 class Welcome extends StatelessWidget {
@@ -28,61 +18,27 @@ class Welcome extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(
-                  //  color: Color(0xFFBBDEFB),
-                ),
-                constraints: BoxConstraints(
-                    maxHeight: 40*(SizeConfig.isMobilePortrait? SizeConfig.heightMultiplier:SizeConfig.widthMultiplier+3)),
+                height:MediaQuery.of(context).size.height/5*3,
+
                 child: Stack(
                   children: <Widget>[
-                    FractionallySizedBox(
-                        alignment: Alignment.topCenter,
-                        heightFactor: 0.9,
-                        child: ClipPath(
-                          clipper: ClippingPath(),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                end: Alignment.bottomRight,
-                                colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],),
-                            ),
-                          ),
-                        )
-                    ),
-                     Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex:3,
-                          child: Padding(
-                            padding:  EdgeInsets.only(bottom:9*SizeConfig.heightMultiplier,top:3*SizeConfig.heightMultiplier),
-                            child: Image(
-                              image: AssetImage("images/mainpages/lable2.png"),
-                              height: 35.0* SizeConfig.imageSizeMultiplier,
-                              width: 35.0*SizeConfig.imageSizeMultiplier,
-                            ),
-                          ),
+                    ClipPath(
+                      clipper: ClippingPath(),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height/5*3,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image:AssetImage("images/mainpages/5555.jpg"),)
                         ),
-
-                        Expanded(
-                          flex: 4,
-                          child: Padding(
-                            padding:  EdgeInsets.only(top:3*SizeConfig.heightMultiplier ,right:1*SizeConfig.heightMultiplier ),
-                            child: Column(
-                              children: <Widget>[
-                                animated("Welcome"),
-
-                                Padding(
-                                  padding:  EdgeInsets.only(top:3*SizeConfig.heightMultiplier,bottom: 3*SizeConfig.heightMultiplier),
-                                  child: animated("To")
-                                ),
-                                animated("Medicare"),
-
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
+                    Center(
+                      child: Container(
+                        child: Image.asset("images/mainpages/Online-Pharmacy.png"),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -115,11 +71,11 @@ class Welcome extends StatelessWidget {
   }
 }
 
+
+
 class Button extends StatelessWidget {
 
 final AuthService _auth=AuthService();
-
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -136,7 +92,7 @@ final AuthService _auth=AuthService();
                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Signin()));
               },
               child: Container(
-                height: 6.7*SizeConfig.heightMultiplier,
+                height: 40.0,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
@@ -152,6 +108,9 @@ final AuthService _auth=AuthService();
             ),
           ),
         ),
+
+
+
         Padding(
           padding:  EdgeInsets.only(top:7*SizeConfig.heightMultiplier,bottom: 7*SizeConfig.heightMultiplier,
               left: 6*SizeConfig.heightMultiplier,right: 6*SizeConfig.heightMultiplier),
@@ -168,8 +127,7 @@ final AuthService _auth=AuthService();
                   print(result);
               },
               child: Container(
-                height: 6.7*SizeConfig.heightMultiplier,
-
+                height: 40.0,
                 decoration: BoxDecoration(
                     color: Color(0xFFE3F2FD),
                  borderRadius: BorderRadius.circular(5*SizeConfig.heightMultiplier),
@@ -192,29 +150,7 @@ final AuthService _auth=AuthService();
   }
 }
 
-Widget animated(String text){
-  return ColorizeAnimatedTextKit(
-      speed: Duration(milliseconds: 400),
 
-      repeatForever: true,
-      isRepeatingAnimation:true,
-      text: [
-        text,
-      ],
-      textStyle: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontFamily:"Roboto" ,
-          fontStyle: FontStyle.italic,
-          fontSize: 12*SizeConfig.textMultiplier),
-      colors: [
-        Color(0xFF185a9d),
-        Colors.blue,
-        Colors.yellow,
-        Colors.red,
-      ],
-      alignment: AlignmentDirectional.topStart // or Alignment.topLeft
-  );
-}
 
 Widget  _customAppBar(context){
   return PreferredSize(

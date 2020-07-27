@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:medicare/commanpages/textstyle.dart';
 import 'package:medicare/commanpages/configue.dart';
 import 'package:medicare/commanpages/responsive.dart';
-import 'package:medicare/commanpages/footer.dart';
+
 
 
 
@@ -14,7 +14,7 @@ import 'package:medicare/commanpages/footer.dart';
 import 'package:medicare/mainpages/services.dart';
 import 'package:medicare/mainpages/AskQ.dart';
 import 'package:medicare/mainpages/contact.dart';
-import 'package:medicare/mainpages/welcome.dart';
+import 'package:medicare/loginSignup/welcome.dart';
 
 
 
@@ -86,11 +86,7 @@ class _HomePageState extends State<HomePage> {
                               portraitLayout: PortraitDisplay(),
                             )
                           ),
-                      Container(constraints: BoxConstraints(
-                          maxHeight: 85*(SizeConfig.isMobilePortrait? SizeConfig.heightMultiplier:(SizeConfig.widthMultiplier+1.5))
-                      ),
-                        color: Color(0xFFBBDEFB) ,
-                        child: Contact(),),
+
                     ],
                   ),
               ),

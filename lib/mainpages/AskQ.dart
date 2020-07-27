@@ -4,7 +4,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 
 import 'package:medicare/commanpages/configue.dart';
-import 'package:medicare/commanpages/footer.dart';
 
 
 
@@ -68,11 +67,7 @@ class _AskQState extends State<AskQ> {
           ),
         ),
               Questions(),
-              Container(constraints: BoxConstraints(
-                  maxHeight: 85*(SizeConfig.isMobilePortrait? SizeConfig.heightMultiplier:(SizeConfig.widthMultiplier+1.5))
-              ),
-                color: Color(0xFFBBDEFB) ,
-                child: Contact(),),
+
      ]),
     ),
 
