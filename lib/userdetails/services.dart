@@ -2,10 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicare/commanpages/configue.dart';
 import 'package:medicare/commanpages/footer.dart';
-
-
-              //main pages
-import 'package:medicare/mainpages/homepage.dart';
+import 'package:medicare/productstore/catergorylist.dart';
 import 'package:medicare/loginSignup/welcome.dart';
 
 class Services extends StatefulWidget {
@@ -41,7 +38,7 @@ class _ServicesState extends State<Services> {
     return SafeArea(
 
       child: Scaffold(
-        appBar:_customAppBar(context) ,
+       // appBar:_customAppBar(context) ,
         body: ListView(
           children: <Widget>[
             Column(
@@ -124,7 +121,7 @@ class _ServicesState extends State<Services> {
                                 elevation: 7.0,
                                 child: InkWell(
                                   onTap: (){
-                                   // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Welcome()));
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Store()));
                                   },
                                   child: Container(
                                     height: 6.7*SizeConfig.heightMultiplier,
@@ -150,12 +147,8 @@ class _ServicesState extends State<Services> {
 
                   ])
                 ),
-                Partners(),
-                Container(constraints: BoxConstraints(
-                    maxHeight: 85*(SizeConfig.isMobilePortrait? SizeConfig.heightMultiplier:(SizeConfig.widthMultiplier+1.5))
-                ),
-                  color: Color(0xFFBBDEFB) ,
-                  child: Contact(),),
+
+
               ],
             )
           ],
@@ -165,55 +158,6 @@ class _ServicesState extends State<Services> {
   }
 }
 
-Widget  _customAppBar(context){
-  return PreferredSize(
-    preferredSize: Size.fromHeight(12*SizeConfig.heightMultiplier),
-    child: Container(
-      alignment: Alignment.bottomCenter,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],
-
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.only(left:2.2*SizeConfig.widthMultiplier,right:2.2*SizeConfig.widthMultiplier ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              IconButton(icon: Icon(Icons.arrow_back_ios,color: Colors.white,),
-                onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomePage()));
-
-                },),
-              Text("Our Services",
-                  style:Theme.of(context).textTheme.subtitle.copyWith(color: Colors.white)),
-              Material(
-                elevation: 7.0,
-                borderRadius: BorderRadius.circular(2.2*SizeConfig.heightMultiplier),
-                color: Colors.white70,
-
-                child: InkWell(
-                  onTap: (){},
-                  child: Container(
-                    height: 6*SizeConfig.heightMultiplier,
-                    width: 14*SizeConfig.heightMultiplier,
-                    child: Center(
-                      child: Text("Sign in",
-                          style: Theme.of(context).textTheme.display1.copyWith(color:Color(0xFF1565C0) )),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),),
-  );
-}
 
 
 
@@ -252,64 +196,3 @@ Widget _bodyPage(BuildContext context,String img,String name,String des){
 }
 
 
-
-class Partners extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(5*SizeConfig.heightMultiplier),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text("Our partners",
-            style: Theme.of(context).textTheme.subtitle,),
-          Padding(
-            padding: EdgeInsets.only(top: 2*SizeConfig.heightMultiplier,left: 2*SizeConfig.heightMultiplier),
-            child: Text("\t      Our partners are a part of our unique experience.We build relationships to ensure that you,our"
-                "loyal customer experiences the best",
-              textAlign: TextAlign.justify,
-              style: Theme.of(context).textTheme.display1,),
-          ),
-          Container(
-            constraints: BoxConstraints(
-                maxHeight: 30*(SizeConfig.isMobilePortrait? SizeConfig.heightMultiplier:(SizeConfig.widthMultiplier+1.5))
-            ),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                _partners("images/mainpages/partner1.jpg"),
-                _partners("images/mainpages/partner2.jpg"),
-                _partners("images/mainpages/partner 5.png"),
-                _partners("images/mainpages/partner3.png"),
-              ],
-            ),
-          )
-
-        ],
-      ),
-    );
-  }
-}
-
-
-Widget _partners (String name){
-  return  Padding(
-    padding: const EdgeInsets.all(10.0),
-    child: Card(
-      borderOnForeground: true,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          height: 20*SizeConfig.heightMultiplier,
-          width: 25*SizeConfig.heightMultiplier,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(name),
-                fit: BoxFit.fill
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}

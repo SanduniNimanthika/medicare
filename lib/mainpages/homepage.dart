@@ -1,19 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-
-
 import 'package:medicare/commanpages/textstyle.dart';
 import 'package:medicare/commanpages/configue.dart';
-import 'package:medicare/commanpages/responsive.dart';
-
-
-
-
-        //mainpages
-import 'package:medicare/mainpages/services.dart';
-import 'package:medicare/mainpages/AskQ.dart';
-import 'package:medicare/mainpages/contact.dart';
+import 'package:medicare/commanpages/footer.dart';
+import 'package:medicare/productstore/catergorylist.dart';
 import 'package:medicare/loginSignup/welcome.dart';
 
 
@@ -21,6 +11,29 @@ import 'package:medicare/loginSignup/welcome.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
+}
+final int _numpage=1;
+final PageController _pageController=PageController(initialPage:0);
+int _currentpage=0;
+
+List<Widget> _buildPageIndicator(){
+  List<Widget> list=[];
+  for (int i=0; i<=_numpage;i++){
+    list.add(i==_currentpage ? _indicator(true):_indicator(false));
+  }
+  return list;
+}
+Widget _indicator(bool isActive){
+  return AnimatedContainer(
+    duration: Duration(milliseconds: 150),
+    margin: EdgeInsets.symmetric(horizontal: 10.0),
+    height: 1.5*SizeConfig.heightMultiplier,
+    width: isActive ?20*SizeConfig.heightMultiplier:10*SizeConfig.heightMultiplier,
+    decoration: BoxDecoration(
+        color: isActive ? Color(0xFF185a9d): Colors.black26,
+        borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier)
+    ),
+  );
 }
 
 class _HomePageState extends State<HomePage> {
@@ -30,8 +43,8 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         key: _key,
-        drawer: buildDrawer(context),
-        appBar: _customAppBar(_key,context),
+     //   drawer: buildDrawer(context),
+      //  appBar: _customAppBar(_key,context),
         backgroundColor: AppTheme.appBackgroundColor,
         body: SingleChildScrollView(
                 child: Column(
@@ -75,17 +88,139 @@ class _HomePageState extends State<HomePage> {
 
 
                                           // body
-
-                      
                           Container(
                               constraints: BoxConstraints(
-                                  maxHeight: 300*(SizeConfig.isMobilePortrait? SizeConfig.heightMultiplier:(SizeConfig.widthMultiplier+1.5))
+                                  maxHeight: 160*(SizeConfig.isMobilePortrait? SizeConfig.heightMultiplier:(SizeConfig.widthMultiplier+1.5))
                               ),
-                            child:Responsive(
-                              landscapeLayout: LandscapeDisplay(),
-                              portraitLayout: PortraitDisplay(),
-                            )
+                            child: PortraitDisplay(),
+                           // )
                           ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+
+                          Padding(
+                            padding: EdgeInsets.only(top: 9*SizeConfig.heightMultiplier),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: _buildPageIndicator(),
+                            ),
+                          ),
+                          Container(
+                              height: 105*SizeConfig.heightMultiplier,
+                              child: PageView(
+                                  physics: ClampingScrollPhysics(),
+                                  controller: _pageController,
+                                  onPageChanged: (int page){
+                                    setState(() {
+                                      _currentpage=page;
+                                    });
+                                  },
+                                  children: <Widget>[
+                                    Column(
+                                      children: <Widget>[
+                                        Expanded(
+                                          flex:10,
+                                          child: _bodyPage(context, "images/mainpages/pres.png","Prescription medication",
+                                              "\t      Click the below upload prescription button and"
+                                                  " upload photo of your prescription  issued "
+                                                  "by a SLMC registered doctor. We deliver medicine to your doorstep. "),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(top: 1*SizeConfig.heightMultiplier),
+                                            child: Center(
+                                              child:Material(
+                                                borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
+                                                elevation: 7.0,
+                                                child: InkWell(
+                                                  onTap: (){
+                                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Welcome()));
+                                                  },
+                                                  child: Container(
+                                                    height: 6.7*SizeConfig.heightMultiplier,
+                                                    width: 29*SizeConfig.heightMultiplier,
+                                                    decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                        begin: Alignment.topLeft,
+                                                        end: Alignment.bottomRight,
+                                                        colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],),
+                                                      borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text("Upload perscription",
+                                                          style:Theme.of(context).textTheme.subhead),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+
+
+
+                                    // second page
+                                    Column(
+                                      children: <Widget>[
+                                        Expanded(
+                                          flex: 10,
+                                          child: _bodyPage(context, "images/mainpages/OnlineStore.png",
+                                            "Health care product",
+                                            "\t      Enhance your physical and mental with our health care products."
+                                                "Click the bellow shop now button and checkout our product store and"
+                                                " order as you wish. We deliver products to your"
+                                                "doorstep",),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(top: 1*SizeConfig.heightMultiplier),
+                                            child: Center(
+                                              child:Material(
+                                                borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
+                                                elevation: 7.0,
+                                                child: InkWell(
+                                                  onTap: (){
+                                                     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Store()));
+                                                  },
+                                                  child: Container(
+                                                    height: 6.7*SizeConfig.heightMultiplier,
+                                                    width: 15*SizeConfig.heightMultiplier,
+                                                    decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                        begin: Alignment.topLeft,
+                                                        end: Alignment.bottomRight,
+                                                        colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],),
+                                                      borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text("Shop now",
+                                                          style:Theme.of(context).textTheme.subhead),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                  ])
+                          ),
+
+                          Container(constraints: BoxConstraints(
+                              maxHeight: 85*(SizeConfig.isMobilePortrait? SizeConfig.heightMultiplier:(SizeConfig.widthMultiplier+1.5))
+                          ),
+                            color: Color(0xFFBBDEFB) ,
+                            child: Contact(),),
+                        ],
+                      )
 
                     ],
                   ),
@@ -96,7 +231,39 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+Widget _bodyPage(BuildContext context,String img,String name,String des){
+  return Padding(
+    padding: EdgeInsets.all(5*SizeConfig.heightMultiplier),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Center(
+          child: Image(
+            image: AssetImage(img),
+            height: 90*SizeConfig.imageSizeMultiplier,
+            width: 90*SizeConfig.imageSizeMultiplier,
+          ),
+        ),
+        Padding(
+          padding:  EdgeInsets.only(top: 1*SizeConfig.heightMultiplier),
+          child: Text(
+              name, style:Theme.of(context).textTheme.subtitle
+          ),
+        ),
+        Padding(
+          padding:  EdgeInsets.only(top: 2*SizeConfig.heightMultiplier, left:6*SizeConfig.widthMultiplier),
+          child: Text(
+              des,
+              textAlign: TextAlign.justify,
+              style: Theme.of(context).textTheme.display1
+          ),
+        ),
 
+      ],
+    ),
+  );
+
+}
 
                             //portrait
 
@@ -118,247 +285,12 @@ class  PortraitDisplay extends StatelessWidget {
             width: 40*SizeConfig.imageSizeMultiplier,
           ),
         ),
-
-
-        Expanded(
-          flex: 2,
-          child:_bodyDescription(context,Strings.pretitle,
-             Strings.predes)
-        ),
-        Expanded(
-          flex: 2,
-          child:Column(
-            children: <Widget>[
-              Image(
-                image: AssetImage("images/mainpages/prescription.png"),
-                height: 40* SizeConfig.imageSizeMultiplier,
-                width: 40*SizeConfig.imageSizeMultiplier,
-              ),
-              Material(
-                borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
-                elevation: 7.0,
-                child: InkWell(
-                  onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Welcome()));
-                  },
-                  child: Container(
-                    height: 6.7*SizeConfig.heightMultiplier,
-                    width: 29*SizeConfig.heightMultiplier,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],),
-                      borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
-                    ),
-                    child: Center(
-                      child: Text("Upload perscription",
-                          style:Theme.of(context).textTheme.subhead),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-          Expanded(
-          flex: 2,
-            child:_bodyDescription(context, Strings.healthtitle,
-              Strings.healthdes)
-    ),
-          Expanded
-          (
-            flex: 2,
-              child:Column(
-              children: <Widget>[
-                Image(
-                image: AssetImage("images/mainpages/OnlineStore.png"),
-                height: 40* SizeConfig.imageSizeMultiplier,
-                width: 60*SizeConfig.imageSizeMultiplier,
-                ),
-                Material(
-                  borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
-                  elevation: 7.0,
-                  child: InkWell(
-                    onTap: (){
-                    //  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Welcome()));
-                    },
-                    child: Container(
-                      height: 6.7*SizeConfig.heightMultiplier,
-                      width: 15*SizeConfig.heightMultiplier,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],),
-                        borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
-                      ),
-                      child: Center(
-                        child: Text("Shop now",
-                            style:Theme.of(context).textTheme.subhead),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-              ),
-          ),
           
 
           Expanded(
             flex: 6,
            child: Whychoose()
          ),
-      ],
-    );
-  }
-}
-
-
-
-                            //landscape
-
-class LandscapeDisplay extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          flex: 2,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                flex: 3,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image(
-                    image: AssetImage("images/mainpages/welcome.png"),
-                    height: 40* SizeConfig.heightMultiplier,
-                    width: 40*SizeConfig.heightMultiplier,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 7,
-                child: Column(
-                    children:<Widget>[
-                      Column(
-                        children: <Widget>[
-                          _bodyDescription(context, Strings.welcometitle, Strings.welcomedes),
-                        ],
-                      )]),
-              )
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                flex: 7,
-                child: Column(
-                    children:<Widget>[
-                      Column(
-                        children: <Widget>[
-                          _bodyDescription(context, Strings.pretitle, Strings.predes),
-                            Material(
-                            borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
-                            elevation: 7.0,
-                                child: InkWell(
-                                    onTap: (){
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Welcome()));
-                                    },
-                                  child: Container(
-                                      height: 6.7*SizeConfig.heightMultiplier,
-                                      width: 29*SizeConfig.heightMultiplier,
-                                      decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],),
-                                      borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
-                                      ),
-                                        child: Center(
-                                         child: Text("Upload perscription",
-                                            style:Theme.of(context).textTheme.subhead),
-                                            ),
-                                            ),
-                                            ),
-                                            )
-                                                                ],
-                      )]),
-              ),
-              Expanded(
-                flex: 3,
-                child: Padding(
-                  padding:  EdgeInsets.only(right:3*SizeConfig.heightMultiplier),
-                  child: Image(
-                    image: AssetImage("images/mainpages/prescription.png"),
-                    height: 40* SizeConfig.heightMultiplier,
-                    width: 40*SizeConfig.heightMultiplier,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                flex: 3,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 3*SizeConfig.heightMultiplier),
-                  child: Image(
-                    image: AssetImage("images/mainpages/OnlineStore.png"),
-                    height: 50* SizeConfig.heightMultiplier,
-                    width: 50*SizeConfig.heightMultiplier,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 7,
-                child: Column(
-                    children:<Widget>[
-                      Column(
-                        children: <Widget>[
-                          _bodyDescription(context, Strings.healthtitle, Strings.healthdes),
-                          Material(
-                            borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
-                            elevation: 7.0,
-                            child: InkWell(
-                              onTap: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Welcome()));
-                              },
-                              child: Container(
-                                height: 6.7*SizeConfig.heightMultiplier,
-                                width: 15*SizeConfig.heightMultiplier,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],),
-                                  borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
-                                ),
-                                child: Center(
-                                  child: Text("Shop now",
-                                      style:Theme.of(context).textTheme.subhead),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      )]),
-              )
-            ],
-          ),
-        ),
-        Expanded(
-            flex: 4,
-            child: Whychoose()
-        ),
       ],
     );
   }
@@ -477,168 +409,6 @@ Widget _chooseus (BuildContext context,String img,String name,String des){
 
 
 
-
-
-                        //Drawer
-Widget  _customAppBar(GlobalKey<ScaffoldState> globalKey,BuildContext context){
-  return PreferredSize(
-    preferredSize: Size.fromHeight(12*SizeConfig.heightMultiplier),
-    child: Material(
-      elevation: 0.0,
-      child: Container(
-        alignment: Alignment.bottomCenter,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],),
-        ),
-        child: Padding(
-          padding:  EdgeInsets.only(left:2.2*SizeConfig.widthMultiplier,right:2.2*SizeConfig.widthMultiplier ),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                IconButton(icon: Icon(Icons.list,color: Colors.white,size: 5*SizeConfig.heightMultiplier,),
-                  onPressed: (){
-                    globalKey.currentState.openDrawer();
-
-                  },),
-                Material(
-                  elevation: 7.0,
-                  borderRadius: BorderRadius.circular(2.2*SizeConfig.heightMultiplier),
-                  color: Colors.white70,
-
-                  child: InkWell(
-                    onTap: (){},
-                    child: Container(
-                      height: 6*SizeConfig.heightMultiplier,
-                      width: 14*SizeConfig.heightMultiplier,
-                      child: Center(
-                        child: Text("Sign in",
-                            style: Theme.of(context).textTheme.display1.copyWith(color:Color(0xFF1565C0) )),
-                      ),
-                    ),
-                  ),
-                ),
-
-              ],
-            ),
-          ),
-        ),),
-    ),
-  );
-}
-
-
-Widget buildDrawer( context){
-
-  return Drawer(
-
-    // linear background
-    child: Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],
-          tileMode: TileMode.repeated,
-        ),
-      ),
-      child: ListView(
-        children: <Widget>[ // homepage
-          Padding(
-            padding: EdgeInsets.only(top: 7*SizeConfig.heightMultiplier,bottom: 7*SizeConfig.heightMultiplier),
-            child: InkWell(
-              onTap: (){
-                Navigator.of
-                  (context).pop();
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomePage()));
-              },
-              child: ListTile(
-                title:Text("Medicare",
-                    style: Theme.of(context).textTheme.headline),
-                leading: CircleAvatar(
-                  backgroundImage: AssetImage("images/mainpages/pharmacylogo.jpg"),
-                ),
-              ),
-            ),
-          ),
-
-
-          // homepage
-          InkWell(
-            onTap: (){
-              Navigator.of(context).pop();
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomePage()));
-            },
-            child: ListTile(
-              title: Text("Home",style: Theme.of(context).textTheme.subhead),
-              leading: Icon(Icons.home,color: Colors.white,size: 5*SizeConfig.heightMultiplier),
-            ),
-          ),
-
-          Divider(color: Colors.white,),
-
-
-          //order instruction
-          InkWell(
-            child: ListTile(
-              title: Text("How to order",style: Theme.of(context).textTheme.subhead),
-              leading: Icon(Icons.question_answer,color:Colors.white,size: 5*SizeConfig.heightMultiplier),
-            ),
-          ),
-
-          Divider(color: Colors.white,),
-
-
-          // services
-          InkWell(
-            onTap: (){
-              Navigator.of(context).pop();
-               Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Services()));
-            },
-            child: ListTile(
-              title: Text("Our services",style: Theme.of(context).textTheme.subhead),
-              leading: Icon(Icons.shopping_basket,color: Colors.white,size: 5*SizeConfig.heightMultiplier),
-            ),
-          ),
-
-          Divider(color: Colors.white,),
-
-
-          // questions
-          InkWell(
-            onTap: (){
-              Navigator.of(context).pop();
-               Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AskQ()));
-            },
-            child: ListTile(
-              title: Text(" FAQs",style: Theme.of(context).textTheme.subhead,),
-              leading: Icon(Icons.help,color: Colors.white,size: 5*SizeConfig.heightMultiplier),
-            ),
-          ),
-
-          Divider(color: Colors.white,),
-
-
-          //contact
-          InkWell(
-            onTap: (){
-              Navigator.of(context).pop();
-               Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ContactPage()));
-            },
-            child: ListTile(
-              title: Text("Contact",style: Theme.of(context).textTheme.subhead),
-              leading: Icon(Icons.contacts,color: Colors.white,size: 5*SizeConfig.heightMultiplier),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-
-}
 
 
 

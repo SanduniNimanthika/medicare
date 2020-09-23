@@ -33,7 +33,7 @@ class _AskQState extends State<AskQ> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-          Container(
+         /* Container(
           decoration: BoxDecoration(
               //color: Color(0xFFBBDEFB),
               ),
@@ -65,7 +65,7 @@ class _AskQState extends State<AskQ> {
 
             ],
           ),
-        ),
+        ),*/
               Questions(),
 
      ]),
@@ -144,21 +144,22 @@ Widget  _customAppBar(context){
       child: Center(
         child: Column(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                IconButton(icon: Icon(Icons.arrow_back_ios,color: Colors.white,),
-                    onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomePage()));
+            Padding(
+              padding: const EdgeInsets.only(top:18.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                 /* IconButton(icon: Icon(Icons.arrow_back_ios,color: Colors.white,),
+                      onPressed: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomePage()));
 
-                    }
-                ),
-                Text("We are here to help",
-                    style:Theme.of(context).textTheme.subtitle.copyWith(color: Colors.white)),
-                IconButton(icon: Icon(Icons.search,color: Colors.white,),
-                  onPressed: (){}
-                  ,),
-              ],
+                      }
+                  ),*/
+                  Text("We are here to help",
+                      style:Theme.of(context).textTheme.subtitle.copyWith(color: Colors.white)),
+
+                ],
+              ),
             ),
             Text("you",
                 style: Theme.of(context).textTheme.subtitle.copyWith(color: Colors.white)),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:medicare/commanpages/configue.dart';
 import 'package:medicare/loginSignup/Signup.dart';
 import 'package:medicare/services/authentication.dart';
-import 'package:medicare/mainpages/services.dart';
+import 'package:medicare/userdetails/services.dart';
 import 'package:medicare/loginSignup/signin.dart';
 
 
@@ -13,7 +13,7 @@ class Welcome extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar:_customAppBar(context) ,
+     //   appBar:_customAppBar(context) ,
         body:SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -112,7 +112,7 @@ final AuthService _auth=AuthService();
 
 
         Padding(
-          padding:  EdgeInsets.only(top:7*SizeConfig.heightMultiplier,bottom: 7*SizeConfig.heightMultiplier,
+          padding:  EdgeInsets.only(top:5*SizeConfig.heightMultiplier,bottom: 3*SizeConfig.heightMultiplier,
               left: 6*SizeConfig.heightMultiplier,right: 6*SizeConfig.heightMultiplier),
           child: Material(
             borderRadius: BorderRadius.circular(5*SizeConfig.heightMultiplier),
@@ -171,7 +171,7 @@ Widget  _customAppBar(context){
             children: <Widget>[
               IconButton(icon: Icon(Icons.arrow_back_ios,color: Colors.white,),
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Services()));
+               //   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Services()));
                 },),
             ],
           ),
@@ -180,18 +180,13 @@ Widget  _customAppBar(context){
   );
 }
 
-
 class ClippingPath extends CustomClipper<Path>{
   @override
   Path getClip (Size size){
     var path= Path();
-    path.lineTo(0.0, size.height/1.5);
-    var firstControlPoint=Offset(size.width/4,size.height);
-    var firstEndPoint=Offset(size.width/2.25,size.height/1.5);
-    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy, firstEndPoint.dx, firstEndPoint.dy);
-    var secondControlPoint=Offset(size.width-(size.width/3.25),size.height/3.0);
-    var secondEndPoint=Offset(size.width,size.height/1.2);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy, secondEndPoint.dx, secondEndPoint.dy);
+    path.lineTo(0.0, size.height-40);
+    path.quadraticBezierTo(size.width/4,size.height, size.width/2, size.height);
+    path.quadraticBezierTo(size.width-(size.width/4), size.height, size.width, size.height-40);
     path.lineTo(size.width, size.height/1.5);
     path.lineTo(size.width,0.0,);
     path.close();

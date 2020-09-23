@@ -17,11 +17,11 @@ class ContactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar:_customAppBar(context),
+       // appBar:_customAppBar(context),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Container(
+            /*  Container(
                 decoration: BoxDecoration(
                 //  color: Color(0xFFBBDEFB),
                   ),
@@ -52,7 +52,7 @@ class ContactPage extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
+              ), */
               Container(
                   child:Responsive(
                     landscapeLayout: LandscapeDisplay(),
@@ -234,8 +234,7 @@ class Strings {
   static const String openhour="Our hours";
   static const String openhour1='''Mon-Sat   8.30 A.M  -  8.00 P.M''';
   static const String openhour2='''Sun   8.30 A.M  -  4.00 P.M''';
-  static const String openhourimg="images/mainpages/contact/clock (2).png";
-
+  static const String openhourimg="images/mainpages/contact/iconfinder__19ui_2303124.png";
 
 }
 
@@ -281,21 +280,22 @@ class GetInTouch extends StatelessWidget {
             children: <Widget>[
               GestureDetector(
                   onTap:(){
-                    _launchurl("google.com");
+                    _launchurl("https://github.com/SanduniNimanthika");
 
-                  }, child: _media("images/mainpages/contact/fb (2).png")
+                  }, child: _media("https://www.freeiconspng.com/uploads/facebook-png-icon-follow-us-facebook-1.png")
               ),
               GestureDetector(
                   onTap:(){
-                    _launchurl("google.com");
+                    _launchurl("https://github.com/SanduniNimanthika");
 
-                  }, child: _media("images/mainpages/contact/twter.png")
+                  }, child: _media("https://www.freeiconspng.com/uploads/logo-twitter-circle-png-transparent-image-1.png")
               ),
               GestureDetector(
                   onTap:(){
-                    _launchurl("google.com");
+                    _launchurl("https://github.com/SanduniNimanthika");
 
-                  }, child: _media("images/mainpages/contact/instgram.png")
+                  }, child: _media("https://cdn3.iconfinder.com/data/icons/social-network-30/512/social-03-512.png"
+                  )
               ),
             ],
           ),
@@ -325,10 +325,22 @@ Widget _dial(BuildContext context,String name,String img){
       title:  Text(name,
         style:Theme.of(context).textTheme.display1,),
 
-      leading: Image(
-        image: AssetImage(img),
-        height: 10* SizeConfig.imageSizeMultiplier,
-        width: 10*SizeConfig.imageSizeMultiplier,
+      leading: Opacity(
+        opacity: .5,
+        child: Container(
+            height: 10* SizeConfig.imageSizeMultiplier,
+             width: 10*SizeConfig.imageSizeMultiplier,
+
+          decoration: BoxDecoration(
+
+            image:DecorationImage(
+            image: AssetImage(img),
+           fit: BoxFit.cover
+           // height: 10* SizeConfig.imageSizeMultiplier,
+          //  width: 10*SizeConfig.imageSizeMultiplier,
+          ),)
+
+        ),
       ),
     ),
   );
@@ -339,7 +351,7 @@ Widget _dial(BuildContext context,String name,String img){
 
 Widget _media(String imgName){
   return  Image(
-    image: AssetImage(imgName),
+    image: NetworkImage(imgName),
     height: 15* SizeConfig.imageSizeMultiplier,
     width: 15*SizeConfig.imageSizeMultiplier,
   );
@@ -347,37 +359,7 @@ Widget _media(String imgName){
 
 
 
-Widget  _customAppBar(context){
-  return PreferredSize(
-    preferredSize: Size.fromHeight(12*SizeConfig.heightMultiplier),
-    child: Container(
-      alignment: Alignment.bottomCenter,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.only(left:2.2*SizeConfig.widthMultiplier,right:7*SizeConfig.widthMultiplier),
-        child: Center(
-          child: Row(
-            children: <Widget>[
-              IconButton(icon: Icon(Icons.arrow_back_ios,color: Colors.white,),
-                onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomePage()));
 
-                },),
-              Text("Get in touch",
-                style: Theme.of(context).textTheme.subtitle.copyWith(color: Colors.white),),
-
-            ],
-          ),
-        ),
-      ),),
-  );
-}
 
 class ClippingPath extends CustomClipper<Path>{
   @override

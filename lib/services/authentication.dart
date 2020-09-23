@@ -89,7 +89,7 @@ Future signInAnos(BuildContext context) async{
   //sign out
   Future signOut(BuildContext context) async{
     try{
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context)=>Welcome()));
+     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context)=>Welcome()));
 
       return await _auth.signOut();
 
