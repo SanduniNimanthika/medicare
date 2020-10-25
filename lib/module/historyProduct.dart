@@ -1,4 +1,4 @@
-class ProductCart {
+class ProductOrderHistory {
   String productcartkey;
   String productname;
   String userkey;
@@ -8,9 +8,14 @@ class ProductCart {
   double price;
   double fullprice;
   String images;
+  String  fullname;
+  String telenumber;
+ String address;
+ String status;
+ String productOrderHistorykey;
 
 
-  ProductCart(
+  ProductOrderHistory(
       {this.productcartkey,
         this.productname,
         this.userkey,
@@ -18,12 +23,17 @@ class ProductCart {
         this.quntity,
         this.price,
         this.fullprice,
-        this.images,});
+        this.images,
+      this.address,
+      this.telenumber,
+      this.fullname,
+      this.status,
+      this.productOrderHistorykey});
 
 
 
 
-  ProductCart.fromMap(Map<String, dynamic> data) {
+  ProductOrderHistory.fromMap(Map<String, dynamic> data) {
     productcartkey = data['uid'];
     userkey=data['userkey'];
     productkey=data['productkey'];
@@ -34,6 +44,12 @@ class ProductCart {
     fullprice=data['fullprice'];
 
     images=data['images'];
+    fullname=data['fullname'];
+    telenumber=data['telenumber'];
+    address=data['address'];
+    status=data['status'];
+    productOrderHistorykey=data['productOrderHistorykey'];
+
   }
 
   Map<String, dynamic> toMap() {
@@ -46,6 +62,11 @@ class ProductCart {
       'quntity':quntity,
       'price':price,
       'fullprice':fullprice,
+      'address':address,
+      'fullname':fullname,
+      'telenumber':telenumber,
+      'status':status,
+      'productOrderHistorykey':productOrderHistorykey,
 
     };
   }

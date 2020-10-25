@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medicare/module/cart.dart';
 import 'package:medicare/notifier/cartnotifier.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProductCartService {
   String ref = 'ProductCart';
@@ -21,6 +22,7 @@ class ProductCartService {
 
       int quntity,
       double price,
+      double fullprice,
       String images,
       ) async {
     String id = productCollection.document().documentID;
@@ -32,6 +34,7 @@ class ProductCartService {
 
       'quntity': quntity,
       'price': price,
+      'fullprice': fullprice,
       'images': images,
 
     });
@@ -39,8 +42,12 @@ class ProductCartService {
 }
 
 getProductCarts(ProductCartNotifier productCartNotifier) async {
+
+  FirebaseUser user = await FirebaseAuth.instance.currentUser();
+  print(user.uid);
   QuerySnapshot snapshot = await Firestore.instance
       .collection('ProductCart')
+  .where('userkey',isEqualTo:user.uid )
       .orderBy("productname", descending: true)
       .getDocuments();
 

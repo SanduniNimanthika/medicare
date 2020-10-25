@@ -11,7 +11,12 @@ import 'package:medicare/productstore/productlist.dart';
 import 'package:medicare/database/product.dart';
 import 'package:medicare/database/subcatergory.dart';
 import 'package:medicare/productstore/productdisplay.dart';
-
+import 'package:medicare/userdetails/cart.dart';
+import 'package:medicare/module/user.dart';
+import 'package:medicare/module/cart.dart';
+import 'package:medicare/database/cart.dart';
+import 'package:medicare/mainpages/tabhomepage.dart';
+import 'package:medicare/userdetails/home.dart';
 
 class SubCatergorylist extends StatefulWidget {
   @override
@@ -30,6 +35,7 @@ class _SubCatergorylistState extends State<SubCatergorylist> {
 
     super.initState();
   }
+  ProductCartService _cartService = ProductCartService();
 
   GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
@@ -250,13 +256,53 @@ class _SubCatergorylistState extends State<SubCatergorylist> {
                                         Expanded(
                                           flex: 2,
                                           child: IconButton(
-                                            icon: Icon(Icons.add_shopping_cart,color: Color(0xFF185a9d),),
+                                            icon: Icon(Icons.add_shopping_cart,color: Color(0xFF185a9d),), onPressed: ()async{
+                                            final user = Provider.of<User>(context);
+                                            if(user == null){
+
+
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Tabcontroller(3)));
+                                            }else {
+                                              if (productNotifier.currentProduct
+                                                  .type ==
+                                                  'nonperscription required') {
+                                                int quty = 1;
+                                                Navigator.pushReplacement(
+                                                    context, MaterialPageRoute(
+                                                    builder: (
+                                                        BuildContext context ) =>
+                                                        ProductCartlist()));
+                                                await _cartService
+                                                    .createProductCartData(
+                                                    productNotifier
+                                                        .currentProduct
+                                                        .productname,
+                                                    user.userkey,
+                                                    productNotifier
+                                                        .currentProduct
+                                                        .productkey,
+                                                    quty,
+                                                    productNotifier
+                                                        .currentProduct.price,
+                                                    quty * productNotifier
+                                                        .currentProduct.price,
+                                                    productNotifier
+                                                        .currentProduct.images);
+                                              } else {
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: ( context ) =>
+                                                            UserHome()));
+                                              }
+                                            }
+
+                                          },
                                           ),
                                         ),
                                         Expanded(
                                           flex: 2,
                                           child: IconButton(
-                                            icon: Icon(Icons.favorite_border,color: Color(0xFF185a9d),),
+                                            icon: Icon(Icons.favorite_border,color: Color(0xFF185a9d),), onPressed: () {},
                                           ),
                                         )
                                       ],
@@ -287,7 +333,7 @@ Widget _customAppBar(
     String catergoryname,
     ) {
   return PreferredSize(
-    preferredSize: Size.fromHeight(12 * SizeConfig.heightMultiplier),
+    preferredSize: Size.fromHeight(10 * SizeConfig.heightMultiplier),
     child: Material(
       elevation: 0.0,
       child: Container(
@@ -310,7 +356,7 @@ Widget _customAppBar(
                   flex: 1,
                   child: IconButton(
                     onPressed: () {
-                    //  UserAccess().authorizedAccess(context);
+                      Navigator.pop(context);
 
                     },
                     icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -347,7 +393,15 @@ Widget _customAppBar(
                         Expanded(
                           flex: 2,
                           child: IconButton(
-                            icon: Icon(Icons.shopping_basket,),
+                            icon: Icon(Icons.shopping_basket,color: Colors.white,), onPressed: () {
+                            final user = Provider.of<User>(context);
+                            if(user == null){
+                            }else{
+
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context)=>ProductCartlist()));
+
+                            }
+                          },
                           ),
                         ),
 

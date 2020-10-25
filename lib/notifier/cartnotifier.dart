@@ -3,9 +3,12 @@ import 'dart:collection';
 import 'package:medicare/module/cart.dart';
 import 'package:flutter/cupertino.dart';
 
+
 class ProductCartNotifier with ChangeNotifier {
   List<ProductCart> _productCartList = [];
+
   ProductCart _currentProductCart;
+  double totalCartValue = 0;
 
 
 
@@ -22,6 +25,11 @@ class ProductCartNotifier with ChangeNotifier {
     _currentProductCart = productCart;
     notifyListeners();
   }
+   get totalPrice =>
+   _productCartList.fold(0, (total, current) => total + current.fullprice);
+
+
+
   addProductCart(ProductCart productCart) {
     _productCartList.insert(0, productCart);
     notifyListeners();

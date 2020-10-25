@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicare/commanpages/configue.dart';
 import 'package:medicare/commanpages/footer.dart';
+import 'package:medicare/perscriptionOder/uploadperscription.dart';
 import 'package:medicare/productstore/catergorylist.dart';
 import 'package:medicare/loginSignup/welcome.dart';
 
@@ -77,7 +78,7 @@ class _ServicesState extends State<Services> {
                                 elevation: 7.0,
                                 child: InkWell(
                                   onTap: (){
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Welcome()));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PerscriptionUpload()));
                                   },
                                   child: Container(
                                     height: 6.7*SizeConfig.heightMultiplier,

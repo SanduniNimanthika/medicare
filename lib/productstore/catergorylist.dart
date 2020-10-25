@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:medicare/database/catergory.dart';
+import 'package:medicare/mainpages/tabhomepage.dart';
 import 'package:medicare/productstore/subcatergorylist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,10 @@ import 'package:medicare/commanpages/configue.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:medicare/notifier/catergorynoti.dart';
-import 'package:medicare/notifier/subcatnoti.dart';
+
+import 'package:medicare/userdetails/home.dart';
+
+import 'package:medicare/module/user.dart';
 
 class Store extends StatefulWidget {
   @override
@@ -19,7 +23,7 @@ class _StoreState extends State<Store> {
   @override
   void initState() {
     CatergoryNotifier catergoryNotifier =
-    Provider.of<CatergoryNotifier>(context, listen: false);
+        Provider.of<CatergoryNotifier>(context, listen: false);
     getCatergories(catergoryNotifier);
 
     super.initState();
@@ -28,7 +32,7 @@ class _StoreState extends State<Store> {
   @override
   Widget build(BuildContext context) {
     CatergoryNotifier catergoryNotifier =
-    Provider.of<CatergoryNotifier>(context);
+        Provider.of<CatergoryNotifier>(context);
 
     return SafeArea(
       child: Scaffold(
@@ -51,15 +55,15 @@ class _StoreState extends State<Store> {
                     flex: 2,
                     child: Container(
                         child: Padding(
-                          padding: const EdgeInsets.all(23.0),
-                          child: Text(
-                            "Product catergories",
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle
-                                .copyWith(color: Colors.white),
-                          ),
-                        )),
+                      padding: const EdgeInsets.all(23.0),
+                      child: Text(
+                        "Product catergories",
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle
+                            .copyWith(color: Colors.white),
+                      ),
+                    )),
                   ),
                   Expanded(
                     flex: 10,
@@ -79,13 +83,13 @@ class _StoreState extends State<Store> {
                                   child: InkWell(
                                     onTap: () {
                                       catergoryNotifier.currentCatergory =
-                                      catergoryNotifier
-                                          .catergoryList[index];
+                                          catergoryNotifier
+                                              .catergoryList[index];
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (BuildContext context) {
-                                                return SubCatergorylist();
-                                              }));
+                                        return SubCatergorylist();
+                                      }));
                                     },
                                     child: Text(
                                         catergoryNotifier
@@ -112,12 +116,13 @@ class _StoreState extends State<Store> {
                   Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: NetworkImage("http://www.middlewaypharmacy.co.uk/wp-content/uploads/2013/06/banner1.jpg"),
+                            image: NetworkImage(
+                                "http://www.middlewaypharmacy.co.uk/wp-content/uploads/2013/06/banner1.jpg"),
                             fit: BoxFit.fitWidth)),
                     height: (MediaQuery.of(context).size.height / 3) * 1,
                     width: MediaQuery.of(context).size.width,
                     child: ClipRRect(
-                      // make sure we apply clip it properly
+
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
                         child: Opacity(
@@ -151,7 +156,20 @@ class _StoreState extends State<Store> {
                           flex: 1,
                           child: InkWell(
                               onTap: () {
-                              //  UserManagment().authorizedAccess(context);
+                                final user = Provider.of<User>(context);
+                                if (user == null) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Tabcontroller(1)));
+                                } else {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              UserHome()));
+                                }
                               },
                               child: Icon(
                                 Icons.arrow_back_ios,
@@ -214,25 +232,11 @@ class _StoreState extends State<Store> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Expanded(
-                        flex: 5,
-                        child: Text(
-                          "Offers",
-                          style: Theme.of(context).textTheme.subtitle,
-                        )),
-                    Expanded(
-                      flex: 1,
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.list,
-                          size: 5 * SizeConfig.heightMultiplier,
-                          color: Color(0xFF185a9d),
-                        ),
-                        onPressed: () {
-                          _key.currentState.openDrawer();
-                        },
-                      ),
+                    Text(
+                      "Offers",
+                      style: Theme.of(context).textTheme.subtitle,
                     ),
+
                   ],
                 ),
               ),

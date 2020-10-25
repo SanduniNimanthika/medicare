@@ -14,6 +14,11 @@ import 'package:medicare/module/product.dart';
 import 'package:medicare/notifier/subcatnoti.dart';
 import 'package:medicare/database/product.dart';
 import 'package:medicare/database/subcatergory.dart';
+import 'package:medicare/module/user.dart';
+import 'package:medicare/database/cart.dart';
+import 'package:medicare/mainpages/tabhomepage.dart';
+import 'package:medicare/userdetails/cart.dart';
+import 'package:medicare/userdetails/home.dart';
 
 class Productlist extends StatefulWidget {
   @override
@@ -34,6 +39,7 @@ class _ProductlistState extends State<Productlist> {
   }
 
   GlobalKey<ScaffoldState> _key = GlobalKey();
+  ProductCartService _cartService = ProductCartService();
   @override
   Widget build(BuildContext context) {
     CatergoryNotifier catergoryNotifier =
@@ -92,39 +98,42 @@ class _ProductlistState extends State<Productlist> {
                                 child: Row(
                                   children: <Widget>[
                                     Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.rectangle,
-                                              borderRadius: BorderRadius.only(
-                                                  topLeft:
-                                                  Radius.circular(25.0),
-                                                  bottomRight:
-                                                  Radius.circular(25.0))),
-                                          width: MediaQuery.of(context)
-                                              .size
-                                              .width /
-                                              3,
-                                          height: MediaQuery.of(context)
-                                              .size
-                                              .height /
-                                              5,
-                                          child: Container(
+                                        flex: 2,
+                                        child: Container(
                                             decoration: BoxDecoration(
                                                 shape: BoxShape.rectangle,
                                                 borderRadius: BorderRadius.only(
                                                     topLeft:
                                                     Radius.circular(25.0),
                                                     bottomRight:
-                                                    Radius.circular(25.0)),
-                                                image: DecorationImage(
-                                                    image: NetworkImage(
-                                                        productNotifier
-                                                            .productList[index]
-                                                            .images),
-                                                    fit: BoxFit.fill)),
-                                          )),
-                                    ),
+                                                    Radius.circular(25.0))),
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width /
+                                                3,
+                                            height: MediaQuery.of(context)
+                                                .size
+                                                .height /
+                                                5,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.rectangle,
+                                                  borderRadius:
+                                                  BorderRadius.only(
+                                                      topLeft:
+                                                      Radius.circular(
+                                                          25.0),
+                                                      bottomRight:
+                                                      Radius.circular(
+                                                          25.0)),
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(
+                                                          productNotifier
+                                                              .productList[
+                                                          index]
+                                                              .images),
+                                                      fit: BoxFit.fill)),
+                                            ))),
                                     Expanded(
                                       flex: 4,
                                       child: Padding(
@@ -139,15 +148,13 @@ class _ProductlistState extends State<Productlist> {
                                             Expanded(
                                               flex: 2,
                                               child: Text(
-                                                productNotifier
-                                                    .productList[index]
+                                                productNotifier.productList[index]
                                                     .productname,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .subhead
                                                     .copyWith(
-                                                    color:
-                                                    Color(0xFF185a9d),
+                                                    color: Color(0xFF185a9d),
                                                     fontSize: 20.0),
                                               ),
                                             ),
@@ -155,7 +162,10 @@ class _ProductlistState extends State<Productlist> {
                                             Expanded(
                                               flex: 1,
                                               child: Text(
-                                                'Rs.${productNotifier.productList[index].price.toString()}',
+                                                'Rs.${productNotifier
+                                                    .productList[index]
+                                                    .price
+                                                    .toString()}',
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .display1,
@@ -165,6 +175,45 @@ class _ProductlistState extends State<Productlist> {
                                         ),
                                       ),
                                     ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Column(
+                                        children: <Widget>[
+                                          Expanded(
+                                            flex: 2,
+                                            child: IconButton(
+                                              icon: Icon(Icons.add_shopping_cart,color: Color(0xFF185a9d),), onPressed: ()async{
+                                              final user = Provider.of<User>(context);
+                                              if(user == null){
+
+                                                Navigator.push(context, MaterialPageRoute(builder: (context)=>Tabcontroller(3)));
+                                              }else{ if(productNotifier.currentProduct.type=='nonperscription required'){
+                                                int quty=1;
+                                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context)=>ProductCartlist()));
+                                                await _cartService.createProductCartData(productNotifier.currentProduct.productname,
+                                                    user.userkey, productNotifier.currentProduct.productkey,
+                                                    quty,productNotifier.currentProduct.price ,quty*productNotifier.currentProduct.price,productNotifier.currentProduct.images);
+
+                                              }else{
+                                                Navigator.push(context, MaterialPageRoute(builder: (context)=>UserHome()));
+                                              }
+                                              }
+
+
+
+                                            },
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 2,
+                                            child: IconButton(
+                                              icon: Icon(Icons.favorite_border,color: Color(0xFF185a9d),), onPressed: () {},
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+
                                   ],
                                 ),
                               )),
@@ -183,7 +232,7 @@ class _ProductlistState extends State<Productlist> {
 Widget _customAppBar(GlobalKey<ScaffoldState> globalKey, BuildContext context,
     String subcatergoryname) {
   return PreferredSize(
-    preferredSize: Size.fromHeight(12 * SizeConfig.heightMultiplier),
+    preferredSize: Size.fromHeight(10 * SizeConfig.heightMultiplier),
     child: Material(
       elevation: 0.0,
       child: Container(
