@@ -1,3 +1,4 @@
+import 'package:medicare/commanpages/commonWidgets.dart';
 import 'package:medicare/module/user.dart';
 import 'package:medicare/userdetails/home.dart';
 import 'package:provider/provider.dart';
@@ -68,7 +69,7 @@ class _PreviewState extends State<Preview> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final DateTime now = DateTime.now();
-    final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm:ss');
+    final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm:a');
     final String formatted = formatter.format(now);
 
     return SafeArea(
@@ -93,11 +94,17 @@ class _PreviewState extends State<Preview> {
                       color: Color(0xFF185a9d),
                     ),
                     onPressed: () {
+                      if(user==null){
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (BuildContext context) {
+                              return PerscriptionUpload(back:"Customer");
+                            }));
+                      }else{
                       Navigator.of(context).push(
                           MaterialPageRoute(builder: (BuildContext context) {
-                        return PerscriptionUpload();
+                        return PerscriptionUpload(back:"User");
                       }));
-                    },
+                    }}
                   ),
                   flexibleSpace: FlexibleSpaceBar(
                       background: Image.network(
@@ -210,7 +217,7 @@ class _PreviewState extends State<Preview> {
                                         Padding(
                                           padding: EdgeInsets.only(top: 20.0),
                                           child: Text(
-                                            "We will send you to email or message \n about prices of your orders",
+                                            "We will send you to an email  about \n prices of your orders",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .display1,
@@ -220,11 +227,11 @@ class _PreviewState extends State<Preview> {
                                           padding: EdgeInsets.all(30.0),
                                           child: Material(
                                             borderRadius:
-                                                BorderRadius.circular(20.0),
+                                                BorderRadius.circular(22.0),
                                             elevation: 4.0,
                                             child: InkWell(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(22.0),
                                               onTap: () async {
                                                 _perscriptionOrder
                                                     .createPerscriptionOrder(
@@ -254,29 +261,8 @@ class _PreviewState extends State<Preview> {
                                                       (route) => false);
                                                 }
                                               },
-                                              child: Container(
-                                                height: 40.0,
-                                                width: 100.0,
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment.topLeft,
-                                                    end: Alignment.bottomRight,
-                                                    colors: [
-                                                      const Color(0xFF185a9d),
-                                                      const Color(0xFF43cea2)
-                                                    ],
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20.0),
-                                                ),
-                                                child: Center(
-                                                  child: Text("okay",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .subhead),
-                                                ),
-                                              ),
+                                              child:buttonContainer(context, "Okey", 43, 100)
+
                                             ),
                                           ),
                                         ),
@@ -286,26 +272,8 @@ class _PreviewState extends State<Preview> {
                                 );
                               });
                         },
-                        child: Container(
-                          height: 40,
-                          width: 15 * SizeConfig.heightMultiplier,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                const Color(0xFF185a9d),
-                                const Color(0xFF43cea2)
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(
-                                5 * SizeConfig.heightMultiplier),
-                          ),
-                          child: Center(
-                            child: Text("Submit",
-                                style: Theme.of(context).textTheme.subhead),
-                          ),
-                        ),
+                        child: buttonContainer(context, "Submit", 43, null)
+
                       ),
                     ),
                   ),

@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:medicare/commanpages/commonWidgets.dart';
 import 'package:medicare/services/authentication.dart';
 import 'package:medicare/mainpages/forgotpass.dart';
 
@@ -38,149 +39,75 @@ class _SigninState extends State<Signin> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child:loading?Loading(): Scaffold(
-        appBar: _customAppBar(context),
-        body:SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                constraints: BoxConstraints(
-                  maxHeight: 45* SizeConfig.heightMultiplier,),
-                child: Stack(
-                  children: <Widget>[
-                    ClipPath(
-                      clipper: ClippingPath(),
-                      child: Container(
+        child: loading
+            ? Loading()
+            : Scaffold(
+            body: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            end: Alignment.bottomRight,
-                            colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],),
+                            image: DecorationImage(
+                                image:
+                                NetworkImage("https://cdn.wallpapersafari.com/55/39/B9ZMiX.jpg"),
+                                fit: BoxFit.fill)),
+                      ),
+                      Opacity(
+                        opacity: 0.5,
+                        child: Container(
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                       //   color: Colors.white,
+                          decoration: BoxDecoration(
+                              gradient: linearcolor(),
+                        ),
                         ),
                       ),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            Padding(
-                              padding:EdgeInsets.only(top:3*SizeConfig.heightMultiplier ,left:5*SizeConfig.heightMultiplier ),
-                              child: Row(
-                                children: <Widget>[
-                                  Text("W",
-                                      style:Theme.of(context).textTheme.headline.copyWith(fontSize: 60,letterSpacing: 10)),
-                                  Text("elcome",
-                                      style:Theme.of(context).textTheme.headline.copyWith(fontSize: 40,letterSpacing: 1)),
-
-
-                                ],
-                              ),
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.only(left:15*SizeConfig.heightMultiplier ),
-                                  child: Text("B",
-                                      style:Theme.of(context).textTheme.headline.copyWith(fontSize: 60,letterSpacing: 10)),
-                                ),
-                                Text("ack",
-                                    style:Theme.of(context).textTheme.headline.copyWith(fontSize: 40,letterSpacing: 1)
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top:6*SizeConfig.heightMultiplier , ),
-                          child: Image(
-                            image: AssetImage("images/mainpages/login.png"),
-                            height: 25.0* SizeConfig.imageSizeMultiplier,
-                            width: 25.0*SizeConfig.imageSizeMultiplier,
+                      Padding(
+                        padding: EdgeInsets.only(left: 15.0, top: 8.0),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: Colors.white,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                child: Form(
-                  key: _formKey,
-                  child: Padding(
-                    padding: EdgeInsets.only (bottom: 7*SizeConfig.heightMultiplier,
-                        left: 6*SizeConfig.heightMultiplier,right: 6*SizeConfig.heightMultiplier),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
+                          onPressed: () {
 
-                        //Email ADDRESS
-                        Container(
-                          child: new Center(
-                              child: new TextFormField(
-                                  decoration: new InputDecoration(
-                                    labelText: "Email",
-                                    prefixIcon: Icon(Icons.email,color:Colors.blueGrey),
-                                    labelStyle:Theme.of(context).textTheme.display1,
-                                    fillColor: Colors.white,
-                                    focusedBorder:OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color:Color(0xFF185a9d),
-                                          style: BorderStyle.solid,
-                                          width: 1
-                                      ),
-                                      borderRadius: new BorderRadius.circular(22.0),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color:Color(0xFF185a9d),
-                                          style: BorderStyle.solid,
-                                          width: 1
-                                      ),
-                                      borderRadius: new BorderRadius.circular(22.0),
-                                    ),
-                                  ),
-                                  validator: (input)=>input.isEmpty?'Please type your email here':null,
-                                  onChanged: (input){
-                                    setState(() {
-                                      email=input;
-                                    });
-                                  },
-                                  keyboardType: TextInputType.emailAddress,
-                                  style: Theme.of(context).textTheme.display1
-                              )
-                          ),
+                          },
                         ),
+                      ),
+          Container(
+            child: Form(
+              key: _formKey,
+              child: Padding(
+                padding: EdgeInsets.only (top:150.0,bottom: 7*SizeConfig.heightMultiplier,
+                    left: 6*SizeConfig.heightMultiplier,right: 6*SizeConfig.heightMultiplier),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
 
-                        // password
-                        Padding(
-                          padding:  EdgeInsets.only (top:5*SizeConfig.heightMultiplier,bottom:3*SizeConfig.heightMultiplier ),
-                          child: Container(
-                            child: new Center(
-                              child: new TextFormField(
+                    //Email ADDRESS
+                    Opacity(
+                      opacity: 0.6,
+                      child: Container(
+                        child: new Center(
+                            child: new TextFormField(
                                 decoration: new InputDecoration(
-                                  labelText: "Password",
-
-
-                                  prefixIcon: Icon(Icons.vpn_key,color:Colors.blueGrey),
-                                  suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      _togglevisibility();
-                                    },
-                                    child: Icon(
-                                      _showPassword ? Icons.visibility : Icons
-                                          .visibility_off, color: Colors.blueGrey,),
-                                  ),
-
+                                  labelText: "Email",
+                                  filled: true,
+                                  prefixIcon: Icon(Icons.email,color:Colors.blueGrey),
                                   labelStyle:Theme.of(context).textTheme.display1,
                                   fillColor: Colors.white,
-
                                   focusedBorder:OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color:Color(0xFF185a9d),
                                         style: BorderStyle.solid,
                                         width: 1
                                     ),
-                                    borderRadius: new BorderRadius.circular(22.0),
+
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -188,122 +115,163 @@ class _SigninState extends State<Signin> {
                                         style: BorderStyle.solid,
                                         width: 1
                                     ),
-                                    borderRadius: new BorderRadius.circular(22.0),
+
                                   ),
                                 ),
-
-
-                                validator: (input)=>input.length<6?'Your password needs to be at least 6 characters':null,
+                                validator: (input)=>input.isEmpty?'Please type your email here':null,
                                 onChanged: (input){
                                   setState(() {
-                                    password=input;
+                                    email=input;
                                   });
                                 },
-                                style: Theme.of(context).textTheme.display1,
-                                obscureText: !_showPassword,
-
-                              ),
-                            ),
-                          ),
+                                keyboardType: TextInputType.emailAddress,
+                                style: Theme.of(context).textTheme.display1
+                            )
                         ),
-
-
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: GestureDetector(
-                            onTap: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Forgotpass()));
-                            },
-                            child: Text("Forgot password?",
-                                style:Theme.of(context).textTheme.subhead.copyWith(color:Color(0xFF185a9d) )),
-                          ),
-                        ),
-
-                        Padding(
-                          padding: EdgeInsets.only (top:7*SizeConfig.heightMultiplier,bottom: 2*SizeConfig.heightMultiplier,),
-                          child: Material(
-                            borderRadius: BorderRadius.circular(5*SizeConfig.heightMultiplier),
-                            elevation: 4.0,
-                            child: InkWell(
-                              onTap: ()async{
-                                if(_formKey.currentState.validate()){
-                                  setState(() {
-                                    loading=true;
-                                  });
-                                  dynamic result =await _auth.signInWithEmailAndPassword(email, password,context);
-                                  if (result==null){
-                                    setState(() {
-
-                                    loading=false;}
-                                    );
-
-                                  } if (loading==false){
-                                    setState(() {
-                                      error='Please check your email and password';
-                                    });
-                                  }
-                                }
-                              },
-                              child: Container(
-                                height: 6.7*SizeConfig.heightMultiplier,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],),
-                                  borderRadius: BorderRadius.circular(5*SizeConfig.heightMultiplier),
-                                ),
-                                child: Center(
-                                  child: Text("Login",
-                                      style:Theme.of(context).textTheme.subhead),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Center(child: Text(error,style: Theme.of(context).textTheme.display1.copyWith(color: Colors.red,fontSize: 15),)),
-
-
-
-
-
-                        Padding(
-                          padding:  EdgeInsets.only(top: 3*SizeConfig.heightMultiplier),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                "Don't have an account?\t",
-                                style: Theme.of(context).textTheme.display1,
-                              ),
-                              GestureDetector(
-                                onTap: (){
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Signup()));
-                                },
-                                child: Text("Create an account",
-                                    style:Theme.of(context).textTheme.subhead.copyWith(color:Color(0xFF185a9d) )),
-                              ),
-                            ],
-                          ),
-                        ),
-
-
-
-                      ],
+                      ),
                     ),
-                  ),
+
+                    // password
+                    Padding(
+                      padding:  EdgeInsets.only (top:5*SizeConfig.heightMultiplier,bottom:3*SizeConfig.heightMultiplier ),
+                      child: Opacity(
+                        opacity: 0.6,
+                        child: Container(
+                          child: new Center(
+                            child: new TextFormField(
+                              decoration: new InputDecoration(
+                                labelText: "Password",
+filled: true,
+
+                                prefixIcon: Icon(Icons.vpn_key,color:Colors.blueGrey),
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    _togglevisibility();
+                                  },
+                                  child: Icon(
+                                    _showPassword ? Icons.visibility : Icons
+                                        .visibility_off, color: Colors.blueGrey,),
+                                ),
+
+                                labelStyle:Theme.of(context).textTheme.display1,
+                                fillColor: Colors.white,
+
+                                focusedBorder:OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color:Color(0xFF185a9d),
+                                      style: BorderStyle.solid,
+                                      width: 1
+                                  ),
+
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color:Color(0xFF185a9d),
+                                      style: BorderStyle.solid,
+                                      width: 1
+                                  ),
+
+                                ),
+                              ),
+
+
+                              validator: (input)=>input.length<6?'Your password needs to be at least 6 characters':null,
+                              onChanged: (input){
+                                setState(() {
+                                  password=input;
+                                });
+                              },
+                              style: Theme.of(context).textTheme.display1,
+                              obscureText: !_showPassword,
+
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Forgotpass()));
+                        },
+                        child: Text("Forgot password?",
+                            style:Theme.of(context).textTheme.subhead.copyWith(color:Color(0xFF185a9d),fontWeight: FontWeight.bold )),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.only (top:7*SizeConfig.heightMultiplier,bottom: 2*SizeConfig.heightMultiplier,),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(5*SizeConfig.heightMultiplier),
+                        elevation: 4.0,
+                        child: InkWell(
+                          onTap: ()async{
+                            if(_formKey.currentState.validate()){
+                              setState(() {
+                                loading=true;
+                              });
+                              dynamic result =await _auth.signInWithEmailAndPassword(email, password,context);
+                              if (result==null){
+                                setState(() {
+
+                                  loading=false;}
+                                );
+
+                              } if (loading==false){
+                                setState(() {
+                                  error='Please check your email and password';
+                                });
+                              }
+                            }
+                          },
+                          child:buttonContainer(context, "Login", 43, null)
+
+                        ),
+                      ),
+                    ),
+                    Center(child: Text(error,style: Theme.of(context).textTheme.display1.copyWith(color: Colors.red,fontSize: 15,fontWeight: FontWeight.bold),)),
+
+
+
+
+
+                    Padding(
+                      padding:  EdgeInsets.only(top: 3*SizeConfig.heightMultiplier),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "Don't have an account?\t",
+                            style: Theme.of(context).textTheme.display1.copyWith(color: Colors.black54,fontWeight: FontWeight.bold)
+                          ),
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Signup()));
+                            },
+                            child: Text("Create an account",
+                                style:Theme.of(context).textTheme.subhead.copyWith(color:Color(0xFF185a9d),fontWeight: FontWeight.bold )),
+                          ),
+                        ],
+                      ),
+                    ),
+
+
+
+                  ],
                 ),
-              )
-            ],
-          ),
-        )
-      ),
+              ),
+            ),
+          )
+          ],
+        ),
+    ]))
+    ),
     );
   }
 }
-
-
-
 
 
 

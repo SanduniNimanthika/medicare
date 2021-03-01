@@ -16,20 +16,25 @@ final CollectionReference userCollection=Firestore.instance.collection('User');
   Future updateUserData( String fullname,
   String email,
   String telenumber,
-      String address,)async{
+      String address,
+      String hometown,)async{
     return await userCollection.document(uid).setData({
       'uid':uid,
       'fullname':fullname,
       'email':email,
       'telenumber':telenumber,
       'address':address,
+      'hometown':hometown,
+
     });
 
   }
 
 
 
-
+  Future deleteuser() {
+    return userCollection.document(uid).delete();
+  }
 
   //user profile data from snapshot
   User _userProfileDataFromSnapshot(DocumentSnapshot snapshot){
@@ -39,6 +44,9 @@ final CollectionReference userCollection=Firestore.instance.collection('User');
         email: snapshot.data['email'],
         telenumber: snapshot.data['telenumber'],
       address: snapshot.data['address'],
+      hometown: snapshot.data['hometown'],
+      profileimg: snapshot.data['profileimg']
+
 
     );
   }

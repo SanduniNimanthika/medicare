@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:medicare/commanpages/commonWidgets.dart';
 import 'package:medicare/commanpages/configue.dart';
-import 'package:medicare/commanpages/footer.dart';
 import 'package:medicare/perscriptionOder/uploadperscription.dart';
 import 'package:medicare/productstore/catergorylist.dart';
-import 'package:medicare/loginSignup/welcome.dart';
+
 
 class Services extends StatefulWidget {
   @override
@@ -71,30 +71,17 @@ class _ServicesState extends State<Services> {
                               " upload photo of your prescription  issued "
                               "by a SLMC registered doctor. We deliver medicine to your doorstep. "),
                           Padding(
-                            padding: EdgeInsets.only(top: 2*SizeConfig.heightMultiplier),
+                            padding: EdgeInsets.only(top: 2*SizeConfig.heightMultiplier,left: 35,right: 35),
                             child: Center(
                               child:Material(
-                                borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
+                                borderRadius: BorderRadius.circular(22),
                                 elevation: 7.0,
                                 child: InkWell(
                                   onTap: (){
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PerscriptionUpload()));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PerscriptionUpload(back:'User')));
                                   },
-                                  child: Container(
-                                    height: 6.7*SizeConfig.heightMultiplier,
-                                    width: 29*SizeConfig.heightMultiplier,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],),
-                                      borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
-                                    ),
-                                    child: Center(
-                                      child: Text("Upload perscription",
-                                          style:Theme.of(context).textTheme.subhead),
-                                    ),
-                                  ),
+                                  child: buttonContainer(context, "Upload perscription", 43, null)
+
                                 ),
                               ),
                             ),
@@ -115,30 +102,17 @@ class _ServicesState extends State<Services> {
                                   " order as you wish. We deliver products to your"
                                   "doorstep",),
                           Padding(
-                            padding: EdgeInsets.only(top: 2*SizeConfig.heightMultiplier),
+                            padding: EdgeInsets.only(top: 2*SizeConfig.heightMultiplier,left: 35,right: 35),
                             child: Center(
                               child:Material(
-                                borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
+                                borderRadius: BorderRadius.circular(22),
                                 elevation: 7.0,
                                 child: InkWell(
                                   onTap: (){
                                     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Store()));
                                   },
-                                  child: Container(
-                                    height: 6.7*SizeConfig.heightMultiplier,
-                                    width: 15*SizeConfig.heightMultiplier,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],),
-                                      borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
-                                    ),
-                                    child: Center(
-                                      child: Text("Shop now",
-                                          style:Theme.of(context).textTheme.subhead),
-                                    ),
-                                  ),
+                                  child:buttonContainer(context, "Shop now",43, null)
+
                                 ),
                               ),
                             ),
@@ -182,7 +156,7 @@ Widget _bodyPage(BuildContext context,String img,String name,String des){
           ),
         ),
         Padding(
-          padding:  EdgeInsets.only(top: 2*SizeConfig.heightMultiplier, left:6*SizeConfig.widthMultiplier),
+          padding:  EdgeInsets.only(top: 2*SizeConfig.heightMultiplier),
           child: Text(
               des,
               textAlign: TextAlign.justify,

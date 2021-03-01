@@ -1,3 +1,4 @@
+import 'package:medicare/commanpages/commonWidgets.dart';
 import 'package:medicare/userdetails/home.dart';
 import 'package:flutter/material.dart';
 import 'package:medicare/userdetails/history.dart' as firstpage;
@@ -12,8 +13,9 @@ class _OrderTabState extends State<OrderTab>with SingleTickerProviderStateMixin{
   @override
   void initState() {
     super.initState();
-    controller=new TabController(length: 2, vsync: this);
+    controller = new TabController(length: 2, vsync: this);
   }
+
   @override
   void dispose() {
     controller.dispose();
@@ -23,70 +25,50 @@ class _OrderTabState extends State<OrderTab>with SingleTickerProviderStateMixin{
   Widget build(BuildContext context) {
     return SafeArea(
       child: DefaultTabController(
+
         length: 2,
         child: Scaffold(
-          appBar:AppBar(
-            centerTitle: true,
-            leading: IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (BuildContext context) {
-                      return UserHome();
-                    }));
-              },
-              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-            ),
-            title: Text('Product Orders', style: Theme.of(context).textTheme.subtitle.copyWith(color: Colors.white),),
-            backgroundColor: Color(0xFF185a9d),
-            elevation: 0,
-            bottom: TabBar(
-
-              indicatorSize: TabBarIndicatorSize.tab,
-              controller: controller,
-              indicator: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    const Color(0xFF185a9d),
-                    const Color(0xFF43cea2)
-                  ],
-                ),
-                // borderRadius: BorderRadius.circular(40),
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(100),
+            child: Container(
+              alignment: Alignment.bottomCenter,
+              decoration: BoxDecoration(
+                  gradient: linearcolor()
               ),
-              tabs: <Widget>[
-                new Tab(icon:  Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    child: Image(
-                      image: NetworkImage(
-                        'https://icons-for-free.com/iconfiles/png/512/buy+cart+online+shopping+shop+shopping+shopping+basket+icon-1320191078019322255.png',
+              child: Column(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.grey,
                       ),
-                      fit: BoxFit.cover,
-                    ),
+                      onPressed: () {
+                       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserHome()));
 
-                  ),
-                ),),
-                new Tab(icon: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    child: Image(
-                      image: NetworkImage(
-                        'https://image.flaticon.com/icons/png/512/1560/1560913.png',
-                      ),
-                      fit: BoxFit.cover,
+                      },
                     ),
-
                   ),
-                ),),
-              ],),
+                  TabBar(
+                    indicatorColor: Colors.amber,
+                    labelColor: Colors.white,
+                    controller: controller,
+                    tabs: <Widget>[
+                      tab("https://icons-for-free.com/iconfiles/png/512/buy+cart+online+shopping+shop+shopping+shopping+basket+icon-1320191078019322255.png"),
+                      tab('https://image.flaticon.com/icons/png/512/1560/1560913.png'),
+
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
-
           body: new TabBarView(
             controller: controller,
             children: <Widget>[
               new firstpage.History(),
-              new secondpage.PerscriptionHistory(),
+              new secondpage.PerscriptionHistory()
             ],
           ),
         ),
@@ -95,3 +77,18 @@ class _OrderTabState extends State<OrderTab>with SingleTickerProviderStateMixin{
   }
 }
 
+Widget tab(String name){
+  return Tab(
+    icon: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        child: Image(
+          image: NetworkImage(
+              name
+          ),
+          fit: BoxFit.cover,
+        ),
+      ),
+    ),
+  );
+}

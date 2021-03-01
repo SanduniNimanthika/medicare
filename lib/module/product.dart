@@ -9,6 +9,10 @@ class Product {
   String description;
   String images;
   String productsearchkey;
+  double cardprice;
+  bool capsualtype;
+  double offer;
+  double offerprice;
 
   Product(
       {this.productkey,
@@ -19,7 +23,7 @@ class Product {
         this.quntity,
         this.price,
         this.description,
-        this.images, this.productsearchkey});
+        this.images, this.productsearchkey,this.offer,this.offerprice,this.cardprice,this.capsualtype});
 
 
 
@@ -35,6 +39,10 @@ class Product {
     price=data['price'];
     description=data['description'];
     images=data['images'];
+    cardprice=data['cardprice'];
+    capsualtype=data['capsualtype'];
+    offer=data['offer'];
+    offerprice=data['offerprice'];
   }
 
   Map<String, dynamic> toMap() {
@@ -48,7 +56,11 @@ class Product {
       'type': type,
       'quntity':quntity,
       'price':price,
-      'description':description
+      'description':description,
+      'cardprice':cardprice,
+      'capsualtype':capsualtype,
+      'offer':offer,
+      'offerprice':offerprice,
     };
   }
 }

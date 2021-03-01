@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:medicare/commanpages/commonWidgets.dart';
+import 'package:medicare/mainpages/tabhomepage.dart';
 import 'package:medicare/perscriptionOder/userdetail.dart';
 import 'package:medicare/userdetails/home.dart';
 import 'package:medicare/commanpages/configue.dart';
@@ -7,12 +9,16 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
 class PerscriptionUpload extends StatefulWidget {
+  final String back;
+  PerscriptionUpload({Key key, @required this.back, }) : super(key: key);
   @override
 
-  _PerscriptionUploadState createState() => _PerscriptionUploadState();
+  _PerscriptionUploadState createState() => _PerscriptionUploadState(back:back);
 }
 
 class _PerscriptionUploadState extends State<PerscriptionUpload> {
+  final String back;
+  _PerscriptionUploadState({Key key, @required this.back, });
   String imgerror = '';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   File _image;
@@ -52,7 +58,7 @@ class _PerscriptionUploadState extends State<PerscriptionUpload> {
                       onTap: (){
                         // ignore: deprecated_member_use
                         _selectImage(ImagePicker.pickImage(
-                            source: ImageSource.gallery),
+                            source: ImageSource.camera),
                             1);
                       },
                       child: _display1()
@@ -123,39 +129,27 @@ class _PerscriptionUploadState extends State<PerscriptionUpload> {
                     children: <Widget>[
 
                       Material(
-                        borderRadius: BorderRadius.circular(4*SizeConfig.heightMultiplier),
+                        borderRadius: BorderRadius.circular(22),
                         elevation: 7.0,
                         child: InkWell(
                           onTap: () {
+                            if(back=='User'){
                             Navigator.of(context).push(
                                 MaterialPageRoute(builder: (BuildContext context) {
                                   return UserHome();
-                                }));
+                                }));}else{
+    Navigator.of(context).push(
+    MaterialPageRoute(builder: (BuildContext context) {
+    return Tabcontroller(2);}));
+                            }
                           },
-                          child: Container(
-                            height: 40,
-                            width: 15*SizeConfig.heightMultiplier,
+                          child:buttonContainerWithBlue(context, "Back", 43, 100)
 
-
-                            decoration: BoxDecoration(
-                                color: Color(0xFFE3F2FD),
-                                borderRadius: BorderRadius.circular(4*SizeConfig.heightMultiplier),
-                                border: Border.all(
-                                    color:Color(0xFF185a9d),
-                                    style: BorderStyle.solid,
-                                    width: 2.0
-                                )
-                            ),
-                            child: Center(
-                              child: Text("back",
-                                  style:Theme.of(context).textTheme.subhead.copyWith(color:Color(0xFF185a9d) )),
-                            ),
-                          ),
                         ),
                       ),
 
                       Material(
-                        borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
+                        borderRadius: BorderRadius.circular(22),
                         elevation: 7.0,
                         child: InkWell(
                           onTap: (){
@@ -176,21 +170,8 @@ class _PerscriptionUploadState extends State<PerscriptionUpload> {
                             }
 
                           },
-                          child: Container(
-                            height: 40,
-                            width: 15*SizeConfig.heightMultiplier,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],),
-                              borderRadius: BorderRadius.circular(2*SizeConfig.heightMultiplier),
-                            ),
-                            child: Center(
-                              child: Text("Next",
-                                  style:Theme.of(context).textTheme.subhead),
-                            ),
-                          ),
+                          child:buttonContainer(context, "Next", 43, 100)
+
                         ),
                       )
                     ],

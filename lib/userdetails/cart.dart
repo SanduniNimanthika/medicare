@@ -2,11 +2,13 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:medicare/commanpages/commonWidgets.dart';
 import 'package:medicare/commanpages/configue.dart';
 import 'package:flutter/widgets.dart';
 import 'package:medicare/module/cart.dart';
 import 'package:medicare/services/database.dart';
 import 'package:medicare/userdetails/home.dart';
+import 'package:medicare/userdetails/ordertab.dart';
 import 'package:provider/provider.dart';
 import 'package:medicare/notifier/cartnotifier.dart';
 import 'package:medicare/database/cart.dart';
@@ -99,12 +101,7 @@ class _ProductCartlistState extends State<ProductCartlist> {
                               Expanded(
                                 flex: 2,
                                 child: Container(
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(25.0),
-                                            bottomRight:
-                                                Radius.circular(25.0))),
+                                    decoration:boxDecarationhistory(),
                                     width:
                                         MediaQuery.of(context).size.width / 3,
                                     height:
@@ -145,7 +142,8 @@ class _ProductCartlistState extends State<ProductCartlist> {
                                               .subhead
                                               .copyWith(
                                                   color: Color(0xFF185a9d),
-                                                  fontSize: 20.0),
+                                                  fontSize: 18.0
+                                          ),
                                         ),
                                       ),
                                       Expanded(
@@ -263,25 +261,8 @@ class _ProductCartlistState extends State<ProductCartlist> {
                             return EditUserDetail();
                           });
                     },
-                    child: Container(
-                      height: 40.0,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            const Color(0xFF185a9d),
-                            const Color(0xFF43cea2)
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(
-                            5 * SizeConfig.heightMultiplier),
-                      ),
-                      child: Center(
-                        child: Text("Check out",
-                            style: Theme.of(context).textTheme.subhead),
-                      ),
-                    ),
+                    child:buttonContainer(context,"Check out" , 43, null)
+
                   ),
                 ),
               ),
@@ -308,6 +289,7 @@ class _EditUserDetailState extends State<EditUserDetail> {
 
   String _currenttelenumber;
   String _currentaddress;
+  String _currenthometown;
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context, listen: false);
@@ -349,30 +331,8 @@ class _EditUserDetailState extends State<EditUserDetail> {
                             ),
                             TextFormField(
                                 initialValue: profile.fullname,
-                                decoration: new InputDecoration(
-                                  labelText: "Full Name",
-                                  labelStyle:
-                                      Theme.of(context).textTheme.display1,
-                                  fillColor: Colors.white,
-                                  prefixIcon: Icon(Icons.person,
-                                      color: Colors.blueGrey),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Color(0xFF185a9d),
-                                        style: BorderStyle.solid,
-                                        width: 1),
-                                    borderRadius:
-                                        new BorderRadius.circular(22.0),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Color(0xFF185a9d),
-                                        style: BorderStyle.solid,
-                                        width: 1),
-                                    borderRadius:
-                                        new BorderRadius.circular(22.0),
-                                  ),
-                                ),
+                                decoration: form(context,  "Full Name", Icons.person,),
+
                                 validator: (input) => input.isEmpty
                                     ? 'Please type your full name here'
                                     : null,
@@ -392,32 +352,9 @@ class _EditUserDetailState extends State<EditUserDetail> {
                               child: Container(
                                 child: new Center(
                                     child: new TextFormField(
-                                        initialValue: profile.telenumber,
-                                        decoration: new InputDecoration(
-                                          labelText: "Telephone Number",
-                                          prefixIcon: Icon(Icons.phone,
-                                              color: Colors.blueGrey),
-                                          labelStyle: Theme.of(context)
-                                              .textTheme
-                                              .display1,
-                                          fillColor: Colors.white,
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFF185a9d),
-                                                style: BorderStyle.solid,
-                                                width: 1),
-                                            borderRadius:
-                                                new BorderRadius.circular(22.0),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFF185a9d),
-                                                style: BorderStyle.solid,
-                                                width: 1),
-                                            borderRadius:
-                                                new BorderRadius.circular(22.0),
-                                          ),
-                                        ),
+                                        initialValue: (profile.telenumber == 'telenumber') ? null : profile.telenumber,
+                                        decoration:form(context, "Telephone Number", Icons.phone),
+
                                         validator: (input) => input.length != 10
                                             ? 'Your telephone number is incorrect'
                                             : null,
@@ -441,38 +378,40 @@ class _EditUserDetailState extends State<EditUserDetail> {
                               child: Container(
                                 child: new Center(
                                     child: new TextFormField(
-                                        initialValue: profile.address,
-                                        decoration: new InputDecoration(
-                                          labelText: "Address",
-                                          prefixIcon: Icon(Icons.home,
-                                              color: Colors.blueGrey),
-                                          labelStyle: Theme.of(context)
-                                              .textTheme
-                                              .display1,
-                                          fillColor: Colors.white,
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFF185a9d),
-                                                style: BorderStyle.solid,
-                                                width: 1),
-                                            borderRadius:
-                                                new BorderRadius.circular(22.0),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFF185a9d),
-                                                style: BorderStyle.solid,
-                                                width: 1),
-                                            borderRadius:
-                                                new BorderRadius.circular(22.0),
-                                          ),
-                                        ),
+                                        initialValue: (profile.address == 'address') ? null : profile.address,
+                                        decoration:form(context, "Address", Icons.home)
+                                        ,
                                         validator: (input) => input.isEmpty
                                             ? 'Please type your address here'
                                             : null,
                                         onChanged: (input) {
                                           setState(() {
                                             _currentaddress = input;
+                                          });
+                                        },
+                                        keyboardType: TextInputType.text,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .display1)),
+                              ),
+                            ),
+                            //Address
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: 5 * SizeConfig.heightMultiplier,
+                              ),
+                              child: Container(
+                                child: new Center(
+                                    child: new TextFormField(
+                                        initialValue: (profile.hometown == 'hometown') ? null : profile.hometown,
+                                        decoration:form(context, "Hometown", Icons.location_on)
+                                        ,
+                                        validator: (input) => input.isEmpty
+                                            ? 'Please type your address here'
+                                            : null,
+                                        onChanged: (input) {
+                                          setState(() {
+                                            _currenthometown = input;
                                           });
                                         },
                                         keyboardType: TextInputType.text,
@@ -527,6 +466,7 @@ class _EditUserDetailState extends State<EditUserDetail> {
                                             'fullname': _currentName!=null?_currentName:profile.fullname,
                                             'telenumber': _currenttelenumber!=null?_currenttelenumber:profile.telenumber,
                                             'address': _currentaddress!=null?_currentaddress:profile.address,
+                                            'hometown':_currenthometown!=null?_currenthometown:profile.hometown,
                                             'date':formatted,
                                             'status':'pending',
                                             'productOrderHistorykey':id
@@ -546,31 +486,12 @@ class _EditUserDetailState extends State<EditUserDetail> {
                                       },);
 
                                       Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (context) => History()));
+                                          builder: (context) => OrderTab()));
 
                                     }
                                   },
-                                  child: Container(
-                                    height: 6.7 * SizeConfig.heightMultiplier,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          const Color(0xFF185a9d),
-                                          const Color(0xFF43cea2)
-                                        ],
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          5 * SizeConfig.heightMultiplier),
-                                    ),
-                                    child: Center(
-                                      child: Text("Save",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subhead),
-                                    ),
-                                  ),
+                                  child: buttonContainer(context, "Save", 43, null)
+
                                 ),
                               ),
                             ),
@@ -585,25 +506,8 @@ class _EditUserDetailState extends State<EditUserDetail> {
                                   onTap: () {
                                     Navigator.pop(context);
                                   },
-                                  child: Container(
-                                    height: 6.7 * SizeConfig.heightMultiplier,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xFFE3F2FD),
-                                        borderRadius: BorderRadius.circular(
-                                            4 * SizeConfig.heightMultiplier),
-                                        border: Border.all(
-                                            color: Color(0xFF185a9d),
-                                            style: BorderStyle.solid,
-                                            width: 2.0)),
-                                    child: Center(
-                                      child: Text("Cancle",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subhead
-                                              .copyWith(
-                                                  color: Color(0xFF185a9d))),
-                                    ),
-                                  ),
+                                  child: buttonContainerWithBlue(context, "Cancle", 43, null)
+
                                 ),
                               ),
                             ),
@@ -655,18 +559,41 @@ class Edit extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .subtitle
-                          .copyWith(fontSize: 29),
+                          .copyWith(fontSize: 19),
                     ),
                   ),
+
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: 15.0, right: 15.0, top: 35.0, bottom: 15.0),
-                    child: Text(
-                        'Rs. ${productCartNotifier.currentProductCart.price.toString()}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .display1
-                            .copyWith(fontSize: 19.0)),
+                    padding:
+                    EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0,top:25),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 2,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              right: 15.0,
+                            ),
+                            child: Text('Price:',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .display1
+                                    .copyWith(
+
+                                    color: Color(0xFF185a9d))),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child:  Text(
+                              'Rs. ${productCartNotifier.currentProductCart.price.toString()}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .display1
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Divider(
                     color: Colors.blueGrey,
@@ -674,10 +601,11 @@ class Edit extends StatelessWidget {
                   ),
                   Padding(
                       padding: const EdgeInsets.only(
-                          left: 15.0, right: 15.0, bottom: 15.0, top: 15),
+                          left: 15.0, right: 15.0, bottom: 25.0, top: 15),
                       child: EditQty(
                         title: productCartNotifier.currentProductCart.quntity,
                       )),
+
                   Padding(
                     padding:
                         EdgeInsets.only(left: 15.0, right: 15.0, bottom: 35.0),
@@ -694,7 +622,7 @@ class Edit extends StatelessWidget {
                                     .textTheme
                                     .display1
                                     .copyWith(
-                                        fontSize: 19.0,
+
                                         color: Color(0xFF185a9d))),
                           ),
                         ),
@@ -705,7 +633,7 @@ class Edit extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .display1
-                                  .copyWith(fontSize: 19.0)),
+                                  ),
                         ),
                       ],
                     ),
@@ -715,32 +643,15 @@ class Edit extends StatelessWidget {
                     child: Center(
                       child: Material(
                         borderRadius: BorderRadius.circular(
-                            2 * SizeConfig.heightMultiplier),
+                            22),
                         elevation: 7.0,
                         child: InkWell(
                           onTap: () async {
                             Navigator.pop(context);
                           },
-                          child: Container(
-                            height: 6.7 * SizeConfig.heightMultiplier,
-                            width: 29 * SizeConfig.heightMultiplier,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  const Color(0xFF185a9d),
-                                  const Color(0xFF43cea2)
-                                ],
-                              ),
-                              borderRadius: BorderRadius.circular(
-                                  2 * SizeConfig.heightMultiplier),
-                            ),
-                            child: Center(
-                              child: Text("Edit",
-                                  style: Theme.of(context).textTheme.subhead),
-                            ),
-                          ),
+                          child:
+                              buttonContainer(context, 'Update', 43, 150)
+
                         ),
                       ),
                     ),
@@ -840,7 +751,7 @@ Widget _quntity(
             style: Theme.of(context)
                 .textTheme
                 .display1
-                .copyWith(color: Color(0xFF185a9d), fontSize: 19),
+                .copyWith(color: Color(0xFF185a9d),),
           ),
         ),
       ),
@@ -929,11 +840,7 @@ Widget _customAppBar(
       child: Container(
         alignment: Alignment.bottomCenter,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],
-          ),
+          gradient: linearcolor()
         ),
         child: Padding(
           padding: EdgeInsets.only(

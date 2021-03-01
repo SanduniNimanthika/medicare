@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:medicare/commanpages/commonWidgets.dart';
 import 'package:medicare/commanpages/configue.dart';
 import 'package:medicare/perscriptionOder/previeworder.dart';
 import 'package:medicare/perscriptionOder/uploadperscription.dart';
@@ -49,14 +50,7 @@ class _DetailsState extends State<Details> {
                     height: MediaQuery.of(context).size.height + 150,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          const Color(0xFF185a9d),
-                          const Color(0xFF43cea2)
-                        ],
-                      ),
+                      gradient: linearcolor()
                     ),
                   ),
                 ),
@@ -70,7 +64,7 @@ class _DetailsState extends State<Details> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return PerscriptionUpload();
+                            return PerscriptionUpload(back: 'customer',);
                           }));
                     },
                   ),
@@ -409,17 +403,10 @@ class _DetailsState extends State<Details> {
                     Opacity(
                       opacity: 0.8,
                       child: Container(
-                        height: MediaQuery.of(context).size.height + 100,
+                        height: MediaQuery.of(context).size.height + 130,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              const Color(0xFF185a9d),
-                              const Color(0xFF43cea2)
-                            ],
-                          ),
+                          gradient: linearcolor()
                         ),
                       ),
                     ),
@@ -433,7 +420,7 @@ class _DetailsState extends State<Details> {
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (BuildContext context) {
-                            return PerscriptionUpload();
+                            return PerscriptionUpload(back: "User",);
                           }));
                         },
                       ),
@@ -488,7 +475,7 @@ class _DetailsState extends State<Details> {
                                   child: Container(
                                     child: new Center(
                                         child: new TextFormField(
-                                            initialValue: profile.address,
+                                            initialValue:(profile.address=='address')?null: profile.address,
                                             decoration: form(
                                                 context, "Address", Icons.home),
                                             validator: (input) => input.isEmpty
@@ -515,11 +502,11 @@ class _DetailsState extends State<Details> {
                                   child: Container(
                                     child: new Center(
                                         child: new TextFormField(
-                                            initialValue: profile.address,
+                                            initialValue: (profile.hometown=='hometown')?null:profile.hometown,
                                             decoration: form(context,
                                                 "Hometown", Icons.home),
                                             validator: (input) => input.isEmpty
-                                                ? 'Please type your address here'
+                                                ? 'Please type your hometown here'
                                                 : null,
                                             onChanged: (input) {
                                               setState(() {
@@ -543,7 +530,7 @@ class _DetailsState extends State<Details> {
                                   child: Container(
                                     child: new Center(
                                         child: new TextFormField(
-                                            initialValue: profile.telenumber,
+                                            initialValue: (profile.telenumber=='telenumber')?null:profile.telenumber,
                                             decoration: form(
                                                 context,
                                                 "Telephone Number",
@@ -595,124 +582,57 @@ class _DetailsState extends State<Details> {
                               // button
                               Padding(
                                 padding: EdgeInsets.only(top: 34, bottom: 20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Material(
-                                      borderRadius: BorderRadius.circular(
-                                          4 * SizeConfig.heightMultiplier),
-                                      elevation: 7.0,
-                                      child: InkWell(
-                                        onTap: () {
+                                child: Material(
+                                  borderRadius: BorderRadius.circular(
+                                      5 * SizeConfig.heightMultiplier),
+                                  elevation: 4.0,
+                                  child: InkWell(
+                                    onTap: () async {
+
+                                      if (_formKey.currentState
+                                          .validate()) {
+                                        setState(() {
+                                          loading = true;
+                                        });
+                                        print(fullname);
+                                        String imageUrl;
+
+                                        final FirebaseStorage storage =
+                                            FirebaseStorage.instance;
+                                        final String picture =
+                                            '1${DateTime.now().millisecondsSinceEpoch.toString()}.jpg';
+                                        StorageUploadTask task = storage
+                                            .ref()
+                                            .child('/perscriptions/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg')
+                                            .putFile(img);
+
+                                        StorageTaskSnapshot snapshot =
+                                            await task.onComplete.then(
+                                                (snapshot) => snapshot);
+                                        task.onComplete
+                                            .then((snapshot) async {
+                                          imageUrl = await snapshot.ref
+                                              .getDownloadURL();
+                                          print(firstlineaddress);
+
                                           Navigator.of(context).push(
-                                              MaterialPageRoute(builder:
-                                                  (BuildContext context) {
-                                            return PerscriptionUpload();
-                                          }));
-                                        },
-                                        child: Container(
-                                          height: 40,
-                                          width:
-                                              15 * SizeConfig.heightMultiplier,
-                                          decoration: BoxDecoration(
-                                              color: Color(0xFFE3F2FD),
-                                              borderRadius:
-                                                  BorderRadius.circular(4 *
-                                                      SizeConfig
-                                                          .heightMultiplier),
-                                              border: Border.all(
-                                                  color: Color(0xFF185a9d),
-                                                  style: BorderStyle.solid,
-                                                  width: 2.0)),
-                                          child: Center(
-                                            child: Text("back",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .subhead
-                                                    .copyWith(
-                                                        color:
-                                                            Color(0xFF185a9d))),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Material(
-                                      borderRadius: BorderRadius.circular(
-                                          5 * SizeConfig.heightMultiplier),
-                                      elevation: 4.0,
-                                      child: InkWell(
-                                        onTap: () async {
+                                              MaterialPageRoute(builder: (BuildContext context) {
+                                                return Preview(fullname: fullname.isEmpty?profile.fullname:fullname,
+                                                    firstlineaddress: firstlineaddress.isEmpty?profile.address:firstlineaddress,
+                                                    telenumber: telenumber.isEmpty?profile.telenumber:telenumber,
+                                                    email: profile.email,
+                                                    hometown: hometown.isEmpty?profile.hometown:hometown,
+                                                    days: days==null?0:days, images: imageUrl
+                                                    , specialDescription: specialDescription.isEmpty?'':specialDescription);
+                                              }));
 
-                                          if (_formKey.currentState
-                                              .validate()) {
-                                            setState(() {
-                                              loading = true;
-                                            });
-                                            print(fullname);
-                                            String imageUrl;
+                                        });
 
-                                            final FirebaseStorage storage =
-                                                FirebaseStorage.instance;
-                                            final String picture =
-                                                '1${DateTime.now().millisecondsSinceEpoch.toString()}.jpg';
-                                            StorageUploadTask task = storage
-                                                .ref()
-                                                .child(picture)
-                                                .putFile(img);
+                                      }
+                                    },
+                                    child:buttonContainer(context,'Preview', 43, 130)
 
-                                            StorageTaskSnapshot snapshot =
-                                                await task.onComplete.then(
-                                                    (snapshot) => snapshot);
-                                            task.onComplete
-                                                .then((snapshot) async {
-                                              imageUrl = await snapshot.ref
-                                                  .getDownloadURL();
-                                              print(firstlineaddress);
-
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(builder: (BuildContext context) {
-                                                    return Preview(fullname: fullname.isEmpty?profile.fullname:fullname,
-                                                        firstlineaddress: firstlineaddress.isEmpty?profile.address:firstlineaddress,
-                                                        telenumber: telenumber.isEmpty?profile.telenumber:telenumber,
-                                                        email: profile.email,
-                                                        hometown: hometown.isEmpty?profile.address:hometown,
-                                                        days: days==null?0:days, images: imageUrl
-                                                        , specialDescription: specialDescription.isEmpty?'':specialDescription);
-                                                  }));
-
-                                            });
-
-                                          }
-                                        },
-                                        child: Container(
-                                          height: 40,
-                                          width:
-                                              15 * SizeConfig.heightMultiplier,
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                              colors: [
-                                                const Color(0xFF185a9d),
-                                                const Color(0xFF43cea2)
-                                              ],
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                5 *
-                                                    SizeConfig
-                                                        .heightMultiplier),
-                                          ),
-                                          child: Center(
-                                            child: Text("Preview",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .subhead),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -727,26 +647,8 @@ class _DetailsState extends State<Details> {
           );
         });
   }}
-
-
 }
 
-form(BuildContext context, String labalValue, IconData icons) {
-  return InputDecoration(
-    labelText: labalValue,
-    prefixIcon: Icon(icons, color: Colors.blueGrey),
-    labelStyle: Theme.of(context).textTheme.display1,
-    fillColor: Colors.white,
-    filled: true,
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(
-          color: Color(0xFF185a9d), style: BorderStyle.solid, width: 1),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(
-          color: Color(0xFF185a9d), style: BorderStyle.solid, width: 1),
-    ),
-  );
-}
+
 
 

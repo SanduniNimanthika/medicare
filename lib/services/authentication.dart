@@ -50,7 +50,7 @@ Future signInAnos(BuildContext context) async{
 
 
   // sign up
-  Future   registerWithEmailAndPassword(String email,String password,String fullname,String telenumber,String address ,String confirmpassword,BuildContext context) async {
+  Future   registerWithEmailAndPassword(String email,String password,String fullname,String telenumber,String address,String hometown ,String confirmpassword,BuildContext context) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -58,7 +58,7 @@ Future signInAnos(BuildContext context) async{
 
       Navigator.push(context, MaterialPageRoute(builder: (context)=>UserHome()));
 
-      await DatabaseService(uid: user.uid).updateUserData(fullname, email,  telenumber,address);
+      await DatabaseService(uid: user.uid).updateUserData(fullname, email,  telenumber,address,hometown);
       return _userFromFirebaseUser(user);
     } catch (e) {
       return null;
@@ -99,5 +99,19 @@ Future signInAnos(BuildContext context) async{
     }
   }
 
+  Future deleteUser() async {
+    try {
+      FirebaseUser user = await _auth.currentUser();
+
+       // called from database class
+      await user.delete();
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
 }
+
+

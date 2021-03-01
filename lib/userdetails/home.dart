@@ -6,10 +6,12 @@ import 'package:medicare/userdetails/ordertab.dart';
 import 'package:medicare/userdetails/services.dart';
 import 'package:medicare/services/authentication.dart';
 import 'package:medicare/userdetails/history.dart';
-import 'package:medicare/userdetails/myaccount.dart';
+import 'package:medicare/userdetails/settings/myaccount.dart';
 import 'package:medicare/module/user.dart';
+import 'package:medicare/userdetails/settings/settings.dart';
 import 'package:provider/provider.dart';
 import 'package:medicare/services/database.dart';
+import 'package:medicare/commanpages/commonWidgets.dart';
 
 class UserHome extends StatefulWidget {
   @override
@@ -29,7 +31,9 @@ class _UserHomeState extends State<UserHome> {
           stream: DatabaseService(uid: user.userkey).profileData,
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return Container(
+
+              return Tabcontroller(1);
+              /*Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -43,9 +47,16 @@ class _UserHomeState extends State<UserHome> {
                   ),
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(top: 10.0),
-                  child: CircularProgressIndicator(
+                  child:InkWell(
+                    onTap: (){
+
+                    },
+                    child: Container(child: Text("fgfg")),
+                  )
+                /* CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation(Colors.blue),
-                  ));
+                  )*/
+              );*/
             }
             final profile = snapshot.data;
             return Scaffold(
@@ -57,16 +68,19 @@ class _UserHomeState extends State<UserHome> {
                   child: ListView(
                     children: <Widget>[
                       UserAccountsDrawerHeader(
-                        accountName: Text(profile.fullname),
-                        accountEmail: Text(profile.email),
+                        accountName: Text(profile.fullname,style:Theme.of(context).textTheme.display1.copyWith(color:Colors.white70) ,),
+                        accountEmail: Text(profile.email,style: Theme.of(context).textTheme.display1.copyWith(color:Colors.white70),),
                         currentAccountPicture: GestureDetector(
-                          child: CircleAvatar(
-                              backgroundColor: Colors.white70,
-                              child: Icon(
-                                Icons.person,
-                                color: Colors.blueGrey,
-                                size: 50,
-                              )),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                                backgroundColor: Colors.white70,
+                                child: Icon(
+                                  Icons.person,
+                                  color: Colors.blueGrey,
+                                  size: 50,
+                                )),
+                          ),
                         ),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
@@ -84,110 +98,77 @@ class _UserHomeState extends State<UserHome> {
                       //home
 
                       InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => UserHome()));
-                        },
-                        child: ListTile(
-                          title: Text("New order",
-                              style: Theme.of(context).textTheme.display1),
-                          leading: Icon(Icons.shopping_basket,
-                              color: Colors.blueGrey,
-                              size: 5 * SizeConfig.heightMultiplier),
-                        ),
-                      ),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => UserHome()));
+                          },
+                          child: listbar(
+                              context, "New order", Icons.shopping_basket)),
 
                       Divider(
                         color: Colors.blueGrey,
                       ),
 
                       InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ProductCartlist()));
-                        },
-                        child: ListTile(
-                          title: Text("My cart",
-                              style: Theme.of(context).textTheme.display1),
-                          leading: Icon(Icons.shopping_cart,
-                              color: Colors.blueGrey,
-                              size: 5 * SizeConfig.heightMultiplier),
-                        ),
-                      ),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ProductCartlist()));
+                          },
+                          child:
+                              listbar(context, "My cart", Icons.shopping_cart)),
 
                       Divider(
                         color: Colors.blueGrey,
                       ),
 
                       InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => OrderTab()));
-                        },
-                        child: ListTile(
-                          title: Text("My history",
-                              style: Theme.of(context).textTheme.display1),
-                          leading: Icon(Icons.history,
-                              color: Colors.blueGrey,
-                              size: 5 * SizeConfig.heightMultiplier),
-                        ),
-                      ),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => OrderTab()));
+                          },
+                          child: listbar(context, "My history", Icons.history)),
 
                       Divider(color: Colors.blueGrey),
 
                       InkWell(
-                        onTap: () {
-                          // Navigator.of(context).pop();
-                          // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AskQ()));
-                        },
-                        child: ListTile(
-                          title: Text(
+                          onTap: () {
+                            // Navigator.of(context).pop();
+                            // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AskQ()));
+                          },
+                          child: listbar(
+                            context,
                             " Favourite",
-                            style: Theme.of(context).textTheme.display1,
-                          ),
-                          leading: Icon(Icons.favorite,
-                              color: Colors.blueGrey,
-                              size: 5 * SizeConfig.heightMultiplier),
-                        ),
-                      ),
+                            Icons.favorite,
+                          )),
                       //details
 
                       Divider(
                         color: Colors.blueGrey,
                       ),
                       InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Myaccount()));
-                        },
-                        child: ListTile(
-                          title: Text("My account",
-                              style: Theme.of(context).textTheme.display1),
-                          leading: Icon(Icons.person,
-                              color: Colors.blueGrey,
-                              size: 5 * SizeConfig.heightMultiplier),
-                        ),
-                      ),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Settings()));
+                          },
+                          child: listbar(
+                              context, "Account Security", Icons.settings)),
                       Divider(color: Colors.blueGrey),
 
                       //logout
                       InkWell(
-                        onTap: () async {
-                          await _auth.signOut(context);
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context)=>Tabcontroller(1)));
-                        },
-                        child: ListTile(
-                          title: Text("Logout",
-                              style: Theme.of(context).textTheme.display1),
-                          leading: Icon(Icons.arrow_back,
-                              color: Colors.blueGrey,
-                              size: 5 * SizeConfig.heightMultiplier),
-                        ),
-                      ),
+                          onTap: () async {
+                            await _auth.signOut(context);
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        Tabcontroller(1)));
+                          },
+                          child: listbar(context, "Logout", Icons.arrow_back)),
                     ],
                   ),
                 ),
@@ -208,11 +189,7 @@ Widget _customAppBar(GlobalKey<ScaffoldState> globalKey, BuildContext context) {
       child: Container(
         alignment: Alignment.bottomCenter,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [const Color(0xFF185a9d), const Color(0xFF43cea2)],
-          ),
+          gradient: linearcolor()
         ),
         child: Padding(
           padding: EdgeInsets.only(
