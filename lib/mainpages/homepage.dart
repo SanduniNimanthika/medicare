@@ -281,10 +281,10 @@ Widget _bodyPage(BuildContext context, String img, String name, String des) {
       children: <Widget>[
         Center(
           child: Image(
-            image: AssetImage(img),
-            height: 90 * SizeConfig.imageSizeMultiplier,
-            width: 90 * SizeConfig.imageSizeMultiplier,
-          ),
+          image: AssetImage(img),
+          height: 90 * SizeConfig.imageSizeMultiplier,
+          width: 90 * SizeConfig.imageSizeMultiplier,
+        ),
         ),
         Padding(
           padding: EdgeInsets.only(top: 1 * SizeConfig.heightMultiplier),

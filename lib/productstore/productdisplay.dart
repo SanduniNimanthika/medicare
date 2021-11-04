@@ -18,7 +18,7 @@ class ProductDisplay extends StatefulWidget {
   final String back;
   ProductDisplay({Key key, @required this.back}) : super(key: key);
   @override
-  _ProductDisplayState createState() => _ProductDisplayState(back:this.back);
+  _ProductDisplayState createState() => _ProductDisplayState(back: this.back);
 }
 
 final int _numpage = 1;
@@ -48,7 +48,7 @@ Widget _indicator(bool isActive) {
 }
 
 class _ProductDisplayState extends State<ProductDisplay> {
-   String back;
+  String back;
   _ProductDisplayState({this.back});
   @override
   void initState() {
@@ -75,11 +75,11 @@ class _ProductDisplayState extends State<ProductDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    ProductNotifier productNotifier = Provider.of<ProductNotifier>(context);
+    ProductNotifier productNotifier =
+        Provider.of<ProductNotifier>(context, listen: false);
 
     return SafeArea(
       child: Scaffold(
-
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,10 +274,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
                                     : Container(),
                                 Padding(
                                   padding: const EdgeInsets.only(
-
-                                      right: 25.0,
-                                      bottom: 25.0,
-                                      top: 15),
+                                      right: 25.0, bottom: 25.0, top: 15),
                                   child: _quntity(_add, remove, quty, context),
                                 ),
                                 Divider(
@@ -326,7 +323,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
                     elevation: 7.0,
                     child: InkWell(
                       onTap: () async {
-                        final user = Provider.of<User>(context);
+                        final user = Provider.of<User>(context, listen: false);
                         if (user == null) {
                           Navigator.push(
                               context,
@@ -396,8 +393,6 @@ class _ProductDisplayState extends State<ProductDisplay> {
     );
   }
 }
-
-
 
 Widget _quntity(Function add, Function remove, int qty, context) {
   return Row(

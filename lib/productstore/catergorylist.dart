@@ -23,8 +23,7 @@ class Store extends StatefulWidget {
 
 class _StoreState extends State<Store> {
   GlobalKey<ScaffoldState> _key = GlobalKey();
-  ProductService productService= ProductService();
-
+  ProductService productService = ProductService();
 
   @override
   void initState() {
@@ -46,9 +45,7 @@ class _StoreState extends State<Store> {
         drawer: Drawer(
           // linear background
           child: Container(
-              decoration: BoxDecoration(
-                gradient: linearcolor()
-              ),
+              decoration: BoxDecoration(gradient: linearcolor()),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -116,7 +113,7 @@ class _StoreState extends State<Store> {
               Stack(
                 children: <Widget>[
                   Container(
-                    height: (MediaQuery.of(context).size.height/5 )*2,
+                    height: (MediaQuery.of(context).size.height / 5) * 2,
                     width: MediaQuery.of(context).size.width,
                     color: Colors.white,
                   ),
@@ -125,28 +122,24 @@ class _StoreState extends State<Store> {
                     child: Container(
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage("images/user/online-tablet-with-pills-capsules-blisters-glass-bottles-plastic-tubes_159446-35.jpg"),
+                              image: AssetImage(
+                                  "images/user/online-tablet-with-pills-capsules-blisters-glass-bottles-plastic-tubes_159446-35.jpg"),
                               fit: BoxFit.fill)),
-                      height: (MediaQuery.of(context).size.height/5*2),
-                      width: MediaQuery.of(context).size.width/3*2,
-
+                      height: (MediaQuery.of(context).size.height / 5 * 2),
+                      width: MediaQuery.of(context).size.width / 3 * 2,
                     ),
                   ),
-
                   ClipPath(
                     clipper: ClippingPath(),
                     child: Opacity(
                       opacity: 0.7,
                       child: Container(
-                        height:(MediaQuery.of(context).size.height/5*2 ),
+                        height: (MediaQuery.of(context).size.height / 5 * 2),
                         width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            gradient: linearcolor()
-                        ),
+                        decoration: BoxDecoration(gradient: linearcolor()),
                       ),
                     ),
                   ),
-
                   Padding(
                     padding: EdgeInsets.only(
                         top: 3.5 * SizeConfig.heightMultiplier,
@@ -154,14 +147,14 @@ class _StoreState extends State<Store> {
                         right: 2 * SizeConfig.heightMultiplier,
                         bottom: 20),
                     child: Column(
-
                       children: <Widget>[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             InkWell(
-                                onTap: ()  {
-                                  final user = Provider.of<User>(context);
+                                onTap: () {
+                                  final user =
+                                      Provider.of<User>(context, listen: false);
                                   if (user == null) {
                                     Navigator.push(
                                         context,
@@ -191,7 +184,6 @@ class _StoreState extends State<Store> {
                                 _key.currentState.openDrawer();
                               },
                             ),
-
                           ],
                         ),
                         Align(
@@ -223,31 +215,25 @@ class _StoreState extends State<Store> {
                             opacity: 0.8,
                             child: Container(
                               child: TypeAheadField(
-                                textFieldConfiguration:
-                                TextFieldConfiguration(
+                                textFieldConfiguration: TextFieldConfiguration(
                                   autofocus: false,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .display1,
+                                  style: Theme.of(context).textTheme.display1,
                                   decoration: InputDecoration(
                                     labelText: "search by product name",
-                                    labelStyle: Theme.of(context)
-                                        .textTheme
-                                        .display1,
+                                    labelStyle:
+                                        Theme.of(context).textTheme.display1,
                                     prefixIcon: Icon(Icons.search,
                                         color: Colors.blueGrey),
                                     fillColor: Colors.white,
                                     filled: true,
-                                    focusedBorder:
-                                    OutlineInputBorder(
+                                    focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(22),
                                       borderSide: BorderSide(
                                           color: Color(0xFF185a9d),
                                           style: BorderStyle.solid,
                                           width: 1),
                                     ),
-                                    enabledBorder:
-                                    OutlineInputBorder(
+                                    enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(22),
                                       borderSide: BorderSide(
                                           color: Color(0xFF185a9d),
@@ -255,10 +241,8 @@ class _StoreState extends State<Store> {
                                           width: 1),
                                     ),
                                   ),
-
                                 ),
-                                suggestionsCallback:
-                                    (pattern) async {
+                                suggestionsCallback: (pattern) async {
                                   return await productService
                                       .getSuggestions(pattern);
                                 },
@@ -266,17 +250,15 @@ class _StoreState extends State<Store> {
                                   return Column(
                                     children: <Widget>[
                                       ListTile(
-                                        leading:Container(
-                                          height:30,
+                                        leading: Container(
+                                          height: 30,
                                           width: 30,
                                           child: Image(
                                             image: NetworkImage(
-                                                suggestion['images']
-                                            ),
+                                                suggestion['images']),
                                             fit: BoxFit.cover,
                                           ),
                                         ),
-
                                         title: Text(
                                           suggestion['productname'],
                                           style: Theme.of(context)
@@ -291,27 +273,21 @@ class _StoreState extends State<Store> {
                                   );
                                 },
                                 onSuggestionSelected: (suggestion) {
-
                                   showDialog(
                                       context: context,
                                       builder: (context) {
-                                        return DisplayDetails(productkey: suggestion['uid'],);
+                                        return DisplayDetails(
+                                          productkey: suggestion['uid'],
+                                        );
                                       });
-
-
-
                                 },
                               ),
                             ),
                           ),
                         ),
                       ],
-
                     ),
-
                   ),
-
-
                 ],
               ),
               Padding(
@@ -329,8 +305,6 @@ class _StoreState extends State<Store> {
     );
   }
 }
-
-
 
 /*class Store extends StatefulWidget {
   @override
@@ -567,19 +541,12 @@ class _StoreState extends State<Store> {
   }
 }*/
 
-
-
-
-
-
-
-
-
 class DisplayDetails extends StatefulWidget {
   final String productkey;
   DisplayDetails({Key key, @required this.productkey}) : super(key: key);
   @override
-  _DisplayDetailsState createState() => _DisplayDetailsState(productkey: productkey);
+  _DisplayDetailsState createState() =>
+      _DisplayDetailsState(productkey: productkey);
 }
 
 class _DisplayDetailsState extends State<DisplayDetails> {
@@ -588,11 +555,12 @@ class _DisplayDetailsState extends State<DisplayDetails> {
   @override
   void initState() {
     ProductNotifier productNotifier =
-    Provider.of<ProductNotifier>(context, listen: false);
+        Provider.of<ProductNotifier>(context, listen: false);
     getProducts(productNotifier);
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     ProductNotifier productNotifier = Provider.of<ProductNotifier>(context);
@@ -605,151 +573,162 @@ class _DisplayDetailsState extends State<DisplayDetails> {
             borderRadius: BorderRadius.circular(20.0),
             child: SingleChildScrollView(
                 child: Container(
-                  color: Color(0xFFE3F2FD),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: productNotifier.productList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return (productNotifier.productList[index].productkey==productkey)
-                                ? SingleChildScrollView(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(18.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Container(
-                                            width: MediaQuery.of(context).size.width,
-                                            height: MediaQuery.of(context).size.height / 3 * 1,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.rectangle,
-                                                  borderRadius: BorderRadius.circular(20.0),
-                                                  image: DecorationImage(
-                                                      image: NetworkImage(productNotifier.productList[index].images),
-                                                      fit: BoxFit.fill)),
-                                            )),
-                                        Padding(
-                                          padding: const EdgeInsets.only( top: 25.0),
-                                          child: Text(
-                                            productNotifier.productList[index].productname,
-                                            style: Theme.of(context).textTheme.subtitle,
-                                          ),
+              color: Color(0xFFE3F2FD),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: productNotifier.productList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return (productNotifier.productList[index].productkey ==
+                                productkey)
+                            ? SingleChildScrollView(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(18.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              3 *
+                                              1,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.rectangle,
+                                                borderRadius:
+                                                    BorderRadius.circular(20.0),
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        productNotifier
+                                                            .productList[index]
+                                                            .images),
+                                                    fit: BoxFit.fill)),
+                                          )),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 25.0),
+                                        child: Text(
+                                          productNotifier
+                                              .productList[index].productname,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle,
                                         ),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only( top: 8.0),
-                                          child: Text(
-                                            'By ${productNotifier.productList[index].catergory}',
-                                            style: Theme.of(context).textTheme.display1,
-                                          ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 8.0),
+                                        child: Text(
+                                          'By ${productNotifier.productList[index].catergory}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .display1,
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.only( left:8,
-                                              top: 25.0),
-                                          child: (productNotifier.productList[index].offerprice ==
-                                              0.0)
-                                              ? Row(
-                                            children: <Widget>[
-                                              Text('Product Price :',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .display1
-                                              ),
-                                              Text(
-                                                  'Rs. ${productNotifier.productList[index].price.toString()}',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .display1
-                                                      .copyWith(fontSize: 19.0)),
-                                            ],
-                                          )
-                                              : Column(
-                                            children: <Widget>[
-                                              Row(
+                                      ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.only(left: 8, top: 25.0),
+                                        child: (productNotifier
+                                                    .productList[index]
+                                                    .offerprice ==
+                                                0.0)
+                                            ? Row(
                                                 children: <Widget>[
-                                                  Text('New Price : ',
+                                                  Text('Product Price :',
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .display1),
                                                   Text(
-                                                    'Rs.${productNotifier.productList[index].offerprice.toString()}',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .display1
-                                                        .copyWith(
-                                                        color: Colors.red),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height: 15),
-                                              Row(
-                                                children: <Widget>[
-                                                  Text('Old Price : ',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .display1),
-                                                  Text(
-                                                      'Rs.${productNotifier.productList[index].price.toString()}',
+                                                      'Rs. ${productNotifier.productList[index].price.toString()}',
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .display1
                                                           .copyWith(
-                                                          decoration:
-                                                          TextDecoration
-                                                              .lineThrough)),
+                                                              fontSize: 19.0)),
+                                                ],
+                                              )
+                                            : Column(
+                                                children: <Widget>[
+                                                  Row(
+                                                    children: <Widget>[
+                                                      Text('New Price : ',
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .display1),
+                                                      Text(
+                                                        'Rs.${productNotifier.productList[index].offerprice.toString()}',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .display1
+                                                            .copyWith(
+                                                                color:
+                                                                    Colors.red),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 15),
+                                                  Row(
+                                                    children: <Widget>[
+                                                      Text('Old Price : ',
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .display1),
+                                                      Text(
+                                                          'Rs.${productNotifier.productList[index].price.toString()}',
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .display1
+                                                              .copyWith(
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .lineThrough)),
+                                                    ],
+                                                  ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 34, bottom: 20),
+                                        child: Material(
+                                          borderRadius: BorderRadius.circular(
+                                              5 * SizeConfig.heightMultiplier),
+                                          elevation: 4.0,
+                                          child: InkWell(
+                                              onTap: () {
+                                                productNotifier.currentProduct =
+                                                    productNotifier
+                                                        .productList[index];
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(builder:
+                                                        (BuildContext context) {
+                                                  return ProductDisplay(
+                                                    back: 'subcat',
+                                                  );
+                                                }));
+                                              },
+                                              child: buttonContainer(
+                                                  context, 'Preview', 43, 130)),
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.only(top: 34, bottom: 20),
-                                          child: Material(
-                                            borderRadius: BorderRadius.circular(
-                                                5 * SizeConfig.heightMultiplier),
-                                            elevation: 4.0,
-                                            child: InkWell(
-                                                onTap: ()  {
-                                                  productNotifier.currentProduct =
-                                                  productNotifier.productList[index];
-                                                  Navigator.of(context).push(
-                                                      MaterialPageRoute(builder: (BuildContext context) {
-                                                        return ProductDisplay(back: 'subcat',);
-                                                      }));
-
-
-                                                },
-                                                child:buttonContainer(context,'Preview', 43, 130)
-
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                )
-                                : Container();
-                          }),
-
-
-
-
-
-
-
-                    ],
-                  ),
-                ))));
+                                ),
+                              )
+                            : Container();
+                      }),
+                ],
+              ),
+            ))));
   }
 }
-
-
-
-
-
-
 
 class OfferDisplay extends StatefulWidget {
   @override
@@ -760,7 +739,7 @@ class _OfferDisplayState extends State<OfferDisplay> {
   @override
   void initState() {
     ProductNotifier productNotifier =
-    Provider.of<ProductNotifier>(context, listen: false);
+        Provider.of<ProductNotifier>(context, listen: false);
     getProductsOffer(productNotifier);
 
     super.initState();
@@ -772,23 +751,25 @@ class _OfferDisplayState extends State<OfferDisplay> {
     return GridView.builder(
       shrinkWrap: true,
       physics: ScrollPhysics(),
-      gridDelegate:
-      SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,childAspectRatio:
-      MediaQuery.of(context).size.width /
-          MediaQuery.of(context).size.height/0.70),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: MediaQuery.of(context).size.width /
+              MediaQuery.of(context).size.height /
+              0.70),
       itemCount: productNotifier.productList.length,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
-          onTap: ()async{
+          onTap: () async {
             setState(() {
               productNotifier.currentProduct =
-              productNotifier.productList[index];
+                  productNotifier.productList[index];
             });
 
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) {
-                  return ProductDisplay(back:'offer');
-                }));},
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (BuildContext context) {
+              return ProductDisplay(back: 'offer');
+            }));
+          },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Material(
@@ -798,7 +779,7 @@ class _OfferDisplayState extends State<OfferDisplay> {
               shadowColor: Colors.greenAccent,
               elevation: 5,
               child: Container(
-                  decoration:boxDecarationhistory(),
+                  decoration: boxDecarationhistory(),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -806,9 +787,9 @@ class _OfferDisplayState extends State<OfferDisplay> {
                         Expanded(
                           flex: 3,
                           child: Container(
-                              decoration:boxDecarationhistory(),
-                              width: MediaQuery.of(context).size.width /5*2,
-                              height: MediaQuery.of(context).size.height /5,
+                              decoration: boxDecarationhistory(),
+                              width: MediaQuery.of(context).size.width / 5 * 2,
+                              height: MediaQuery.of(context).size.height / 5,
                               child: Stack(
                                 children: <Widget>[
                                   Container(
@@ -835,12 +816,11 @@ class _OfferDisplayState extends State<OfferDisplay> {
                                             bottomRight: Radius.circular(25.0)),
                                       ),
                                       child: Center(
-                                        child: Text( '${productNotifier.productList[index].offer.toString()}%',
+                                        child: Text(
+                                            '${productNotifier.productList[index].offer.toString()}%',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .subhead
-
-                                        ),
+                                                .subhead),
                                       ),
                                     ),
                                   )
@@ -850,7 +830,8 @@ class _OfferDisplayState extends State<OfferDisplay> {
                         Expanded(
                           flex: 2,
                           child: Padding(
-                            padding: EdgeInsets.only(left: 8.0, right: 8.0,top: 8.0),
+                            padding: EdgeInsets.only(
+                                left: 8.0, right: 8.0, top: 8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -864,23 +845,32 @@ class _OfferDisplayState extends State<OfferDisplay> {
                                         .textTheme
                                         .subhead
                                         .copyWith(
-                                      color: Color(0xFF185a9d),
-                                    ),
+                                          color: Color(0xFF185a9d),
+                                        ),
                                   ),
                                 ),
-
                                 Expanded(
                                   flex: 2,
                                   child: Column(
                                     children: <Widget>[
                                       Text(
                                         'Rs.${productNotifier.productList[index].offerprice.toString()}',
-                                        style: Theme.of(context).textTheme.display1.copyWith(color: Colors.red,fontSize: 14),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .display1
+                                            .copyWith(
+                                                color: Colors.red,
+                                                fontSize: 14),
                                       ),
                                       Text(
                                           'Rs.${productNotifier.productList[index].price.toString()}',
-                                          style: Theme.of(context).textTheme.display1.copyWith(decoration: TextDecoration.lineThrough ,fontSize: 14)
-                                      ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .display1
+                                              .copyWith(
+                                                  decoration: TextDecoration
+                                                      .lineThrough,
+                                                  fontSize: 14)),
                                     ],
                                   ),
                                 ),
@@ -899,9 +889,6 @@ class _OfferDisplayState extends State<OfferDisplay> {
   }
 }
 
-
-
-
 class ClippingPath extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -909,9 +896,9 @@ class ClippingPath extends CustomClipper<Path> {
     path.lineTo(0.0, size.height);
     path.quadraticBezierTo(
         size.width / 4, size.height, size.width / 2, size.height);
-    path.quadraticBezierTo(size.width - (size.width / 4), size.height,
-        size.width, size.height );
-    path.lineTo(size.width, size.height );
+    path.quadraticBezierTo(
+        size.width - (size.width / 4), size.height, size.width, size.height);
+    path.lineTo(size.width, size.height);
     path.lineTo(
       0.0,
       0.0,

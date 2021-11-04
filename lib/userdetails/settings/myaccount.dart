@@ -157,27 +157,21 @@ class _MyaccountState extends State<Myaccount> {
                                                                     initialValue:
                                                                         profile
                                                                             .fullname,
-                                                                    decoration:
-                                                                        new InputDecoration(
-                                                                      labelText:
-                                                                          "Full Name",
-                                                                      labelStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .display1,
-                                                                      fillColor:
-                                                                          Colors
-                                                                              .white,
-                                                                      prefixIcon: Icon(
-                                                                          Icons
-                                                                              .person,
-                                                                          color:
-                                                                              Colors.blueGrey),
-                                                                      focusedBorder:
-                                                                         outline(),
-                                                                      enabledBorder:outline()
-
-                                                                    ),
+                                                                    decoration: new InputDecoration(
+                                                                        labelText:
+                                                                            "Full Name",
+                                                                        labelStyle: Theme.of(context)
+                                                                            .textTheme
+                                                                            .display1,
+                                                                        fillColor: Colors
+                                                                            .white,
+                                                                        prefixIcon: Icon(Icons.person,
+                                                                            color: Colors
+                                                                                .blueGrey),
+                                                                        focusedBorder:
+                                                                            outline(),
+                                                                        enabledBorder:
+                                                                            outline()),
                                                                     validator: (input) => input
                                                                             .isEmpty
                                                                         ? 'Please type your full name here'
@@ -212,14 +206,7 @@ class _MyaccountState extends State<Myaccount> {
                                                                     child: new Center(
                                                                         child: new TextFormField(
                                                                             initialValue: (profile.telenumber == 'telenumber') ? null : profile.telenumber,
-                                                                            decoration: new InputDecoration(
-                                                                              labelText: "Telephone Number",
-                                                                              prefixIcon: Icon(Icons.phone, color: Colors.blueGrey),
-                                                                              labelStyle: Theme.of(context).textTheme.display1,
-                                                                              fillColor: Colors.white,
-                                                                              focusedBorder: outline(),
-                                                                              enabledBorder:outline()
-                                                                            ),
+                                                                            decoration: new InputDecoration(labelText: "Telephone Number", prefixIcon: Icon(Icons.phone, color: Colors.blueGrey), labelStyle: Theme.of(context).textTheme.display1, fillColor: Colors.white, focusedBorder: outline(), enabledBorder: outline()),
                                                                             validator: (input) => input.length != 10 ? 'Your telephone number is incorrect' : null,
                                                                             onChanged: (input) {
                                                                               setState(() {
@@ -245,14 +232,7 @@ class _MyaccountState extends State<Myaccount> {
                                                                     child: new Center(
                                                                         child: new TextFormField(
                                                                             initialValue: (profile.address == 'address') ? null : profile.address,
-                                                                            decoration: new InputDecoration(
-                                                                              labelText: "Address",
-                                                                              prefixIcon: Icon(Icons.home, color: Colors.blueGrey),
-                                                                              labelStyle: Theme.of(context).textTheme.display1,
-                                                                              fillColor: Colors.white,
-                                                                              focusedBorder: outline(),
-                                                                              enabledBorder: outline()
-                                                                            ),
+                                                                            decoration: new InputDecoration(labelText: "Address", prefixIcon: Icon(Icons.home, color: Colors.blueGrey), labelStyle: Theme.of(context).textTheme.display1, fillColor: Colors.white, focusedBorder: outline(), enabledBorder: outline()),
                                                                             validator: (input) => input.isEmpty ? 'Please type your address here' : null,
                                                                             onChanged: (input) {
                                                                               setState(() {
@@ -276,18 +256,11 @@ class _MyaccountState extends State<Myaccount> {
                                                                     child: new Center(
                                                                         child: new TextFormField(
                                                                             initialValue: (profile.hometown == 'hometown') ? null : profile.hometown,
-                                                                            decoration: new InputDecoration(
-                                                                              labelText: "Hometown",
-                                                                              prefixIcon: Icon(Icons.location_on, color: Colors.blueGrey),
-                                                                              labelStyle: Theme.of(context).textTheme.display1,
-                                                                              fillColor: Colors.white,
-                                                                              focusedBorder: outline(),
-                                                                              enabledBorder: outline()
-                                                                            ),
+                                                                            decoration: new InputDecoration(labelText: "Hometown", prefixIcon: Icon(Icons.location_on, color: Colors.blueGrey), labelStyle: Theme.of(context).textTheme.display1, fillColor: Colors.white, focusedBorder: outline(), enabledBorder: outline()),
                                                                             validator: (input) => input.isEmpty ? 'Please type your address here' : null,
                                                                             onChanged: (input) {
                                                                               setState(() {
-                                                                                _currentaddress = input;
+                                                                                _currenthometown = input;
                                                                               });
                                                                             },
                                                                             keyboardType: TextInputType.text,
@@ -366,19 +339,15 @@ class _MyaccountState extends State<Myaccount> {
                   );
                 })));
   }
-  outline(){
+
+  outline() {
     return OutlineInputBorder(
       borderSide: BorderSide(
-          color:
-          Color(0xFF185a9d),
-          style: BorderStyle.solid,
-          width: 1),
-      borderRadius:
-      new BorderRadius.circular(22.0),
+          color: Color(0xFF185a9d), style: BorderStyle.solid, width: 1),
+      borderRadius: new BorderRadius.circular(22.0),
     );
   }
 }
-
 
 class ClippingPath extends CustomClipper<Path> {
   @override
